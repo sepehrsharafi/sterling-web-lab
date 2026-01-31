@@ -36,7 +36,12 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold mb-1">Email Us</h3>
-                  <p className="text-gray-400">sterlingweblab.com</p>
+                  <a
+                    href="mailto:sterlingweblab@gmail.com"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    sterlingweblab@gmail.com
+                  </a>
                 </div>
               </div>
               <div className="flex items-start gap-6">

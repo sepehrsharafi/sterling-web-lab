@@ -116,30 +116,6 @@ const BlogPage = () => {
             </article>
           ))}
         </div>
-
-        {/* Newsletter */}
-        <div className="mt-24 p-12 bg-white/5 rounded-3xl border border-white/5 text-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/10 rounded-full blur-[100px] -z-10" />
-
-          <h3 className="text-3xl font-display font-bold mb-4">
-            Stay in the loop
-          </h3>
-          <p className="text-gray-400 mb-8 max-w-md mx-auto">
-            Get the latest insights and trends delivered directly to your inbox.
-            No spam, we promise.
-          </p>
-
-          <form className="max-w-md mx-auto flex gap-2">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 bg-black/30 border border-white/10 rounded-full px-6 py-3 text-white focus:outline-none focus:border-brand-accent"
-            />
-            <button className="bg-brand-accent text-white px-8 py-3 rounded-full font-bold hover:bg-orange-600 transition-colors">
-              Subscribe
-            </button>
-          </form>
-        </div>
       </div>
     </div>
   );

@@ -1,4 +1,10 @@
-export type PageView = 'home' | 'about' | 'services' | 'contact' | 'agency' | 'blog';
+export type PageView =
+  | "home"
+  | "about"
+  | "services"
+  | "contact"
+  | "agency"
+  | "blog";
 
 export interface NavItem {
   label: string;
@@ -19,6 +25,13 @@ export interface ProjectItem {
   category: string;
   image: string;
   stats: string;
+  description: string;
+  deliverables: string[];
+  highlights: string[];
+  tech: string[];
+  result: string;
+  year?: string;
+  link?: string;
 }
 
 export interface PricingPlan {
