@@ -64,7 +64,7 @@ const Pricing: React.FC = () => {
 
                     <button className={`w-full py-3 rounded-xl font-medium transition-colors ${
                         plan.isPopular 
-                        ? 'bg-brand-accent text-white hover:bg-orange-600' 
+                        ? 'bg-brand-accent text-white hover:bg-white hover:text-black' 
                         : 'bg-white text-black hover:bg-gray-200'
                     }`}>
                         Choose Plan

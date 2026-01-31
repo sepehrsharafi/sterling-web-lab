@@ -98,7 +98,7 @@ const Hero: React.FC = () => {
                 .getElementById("contact-section")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
-            className="group relative px-8 py-4 bg-white text-black font-bold text-xl rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(0,212,255,0.4)]"
+            className="group relative px-8 py-4 bg-white text-black font-bold text-lg xl:text-xl rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(0,212,255,0.4)]"
           >
             <span className="relative z-10 flex items-center gap-2">
               Start Experiment <ArrowRight size={18} />
@@ -111,7 +111,7 @@ const Hero: React.FC = () => {
                 .getElementById("work")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
-            className="group px-8 py-4 border border-white/20 text-xl text-white font-bold rounded-full hover:bg-white/10 hover:border-white/40 transition-all backdrop-blur-sm"
+            className="group px-8 py-4 border border-white/20 text-lg xl:text-xl text-white font-bold rounded-full hover:bg-white/10 hover:border-white/40 transition-all backdrop-blur-sm"
           >
             View Work
           </button>
@@ -119,7 +119,7 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce z-10">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce z-10 -ml-[22px]">
         <span className="text-[10px] uppercase tracking-widest text-white">
           Scroll
         </span>

@@ -28,7 +28,7 @@ const Expertise: React.FC = () => {
   return (
     <section id="expertise" className="relative py-24 md:py-32">
       
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-brand-accent/20 to-purple-600/20 rounded-full blur-3xl animate-pulse pointer-events-none opacity-60 mix-blend-screen" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9/12 md:w-[600px] h-[600px] bg-gradient-to-r from-brand-accent/20 to-purple-600/20 rounded-full blur-3xl animate-pulse pointer-events-none opacity-60 mix-blend-screen" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start mb-16 gap-8">
