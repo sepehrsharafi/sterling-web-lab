@@ -4,89 +4,32 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, X, ExternalLink } from "lucide-react";
 import { ProjectItem } from "../types";
 
-const projects: ProjectItem[] = [
-  {
-    id: "01",
-    client: "Caerweb",
-    category: "Fintech Interface",
-    stats: "+82% Lead Gen",
-    image:
-      "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1400&q=80",
-    description:
-      "A modern fintech dashboard that simplified investment tracking and moved the brand into a premium visual language.",
-    deliverables: ["Product Strategy", "UI/UX", "Design System"],
-    highlights: [
-      "Dynamic portfolio lensing",
-      "Real-time KPI tiles",
-      "High-trust onboarding",
-    ],
-    tech: ["Next.js", "Tailwind", "Figma"],
-    result: "Drove an 82% lift in qualified leads with a 37% faster signup.",
-    year: "2024",
-    link: "https://example.com/caerweb",
-  },
-  {
-    id: "02",
-    client: "Artcore",
-    category: "E-commerce",
-    stats: "3x Conversion",
-    image:
-      "https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=1400&q=80",
-    description:
-      "An immersive retail experience for a boutique art marketplace with storytelling-driven product layouts.",
-    deliverables: ["Brand Refresh", "E-comm UX", "Checkout Optimization"],
-    highlights: ["Artist stories", "AR previews", "Express checkout"],
-    tech: ["Shopify", "React", "GSAP"],
-    result: "Tripled conversion while reducing cart abandonment by 22%.",
-    year: "2023",
-    link: "https://example.com/artcore",
-  },
-  {
-    id: "03",
-    client: "Electic",
-    category: "SaaS Platform",
-    stats: "+45% Retention",
-    image:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80",
-    description:
-      "Reimagined the lifecycle for a B2B SaaS, pairing crisp data visualization with humanized touchpoints.",
-    deliverables: ["Journey Mapping", "UI/UX", "Product Marketing"],
-    highlights: [
-      "Adaptive dashboards",
-      "Role-based modes",
-      "Contextual upsell",
-    ],
-    tech: ["React", "D3", "Framer"],
-    result: "Retention climbed 45% with a notable drop in support tickets.",
-    year: "2024",
-    link: "https://example.com/electic",
-  },
-  {
-    id: "04",
-    client: "Velvet",
-    category: "Fashion Brand",
-    stats: "Award Winning",
-    image:
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1400&q=80",
-    description:
-      "Built a lush digital flagship with cinematic motion for a luxury fashion house.",
-    deliverables: ["Creative Direction", "Lookbook", "Motion"],
-    highlights: [
-      "Cinematic scroll",
-      "Editorial grid",
-      "Lookbook shoppable tags",
-    ],
-    tech: ["Next.js", "Lenis", "Three.js"],
-    result: "Campaign won two Awwwards and lifted average order value by 18%.",
-    year: "2025",
-    link: "https://example.com/velvet",
-  },
-];
-
 const Work: React.FC = () => {
+  const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [selected, setSelected] = useState<ProjectItem | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const closeTimer = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const sanityUrl = process.env.NEXT_PUBLIC_SANITY_URL;
+        if (!sanityUrl) {
+          console.error("Sanity URL is not defined in environment variables.");
+          return;
+        }
+        const response = await fetch(sanityUrl);
+        const data = await response.json();
+        if (data.result) {
+          setProjects(data.result);
+        }
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const backdropGradients = useMemo(
     () => [
@@ -99,7 +42,7 @@ const Work: React.FC = () => {
   );
 
   const gradientForProject = (project: ProjectItem) => {
-    const numeric = Number(project.id.replace(/\D/g, ""));
+    const numeric = parseInt(project._id.slice(-6), 16);
     const idx =
       Number.isFinite(numeric) && numeric >= 0
         ? numeric % backdropGradients.length
@@ -148,7 +91,7 @@ const Work: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {projects.map((project) => (
             <div
-              key={project.id}
+              key={project._id}
               className="group cursor-pointer"
               onClick={() => openModal(project)}
             >

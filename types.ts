@@ -20,7 +20,7 @@ export interface ServiceItem {
 }
 
 export interface ProjectItem {
-  id: string;
+  _id: string;
   client: string;
   category: string;
   image: string;
