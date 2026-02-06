@@ -6,6 +6,16 @@ export type PageView =
   | "agency"
   | "blog";
 
+export interface Blog {
+  id: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  date: string;
+  readTime: string;
+  image: string;
+}
+
 export interface NavItem {
   label: string;
   href: string;

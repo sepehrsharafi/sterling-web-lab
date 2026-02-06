@@ -1,3 +1,5 @@
+import { client } from "@/lib/sanity";
+import { Blog } from "@/types";
 import { ArrowLeft, ArrowUpRight, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -6,54 +8,22 @@ export const metadata: Metadata = {
   title: "Blog",
 };
 
-const blogs = [
-  {
-    id: 1,
-    title: "The Future of Web Design: Trends to Watch in 2025",
-    excerpt:
-      "From AI-generated layouts to immersive 3D experiences, here is what the next year holds for digital design.",
-    category: "Design",
-    date: "Oct 12, 2024",
-    readTime: "5 min read",
-    image:
-      "https://images.unsplash.com/photo-1558655146-d09347e0b7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 2,
-    title: "Optimizing Core Web Vitals for Better SEO",
-    excerpt:
-      "Performance isn't just about speed; it's about visibility. Learn how to tune your site for Google's latest metrics.",
-    category: "Development",
-    date: "Sep 28, 2024",
-    readTime: "8 min read",
-    image:
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 3,
-    title: "Why Minimalist Design Converts Better",
-    excerpt:
-      "Less is more. Discover the psychology behind why simple interfaces lead to higher user engagement.",
-    category: "UX/UI",
-    date: "Sep 15, 2024",
-    readTime: "4 min read",
-    image:
-      "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 4,
-    title: "Building a Design System from Scratch",
-    excerpt:
-      "A step-by-step guide to creating a scalable design language for your product team.",
-    category: "Product",
-    date: "Aug 30, 2024",
-    readTime: "10 min read",
-    image:
-      "https://images.unsplash.com/photo-1586717791821-3f44a5638d48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  },
-];
+async function getBlogs() {
+  const query = `*[_type == "blog"]{
+    "id": _id,
+    title,
+    excerpt,
+    category,
+    date,
+    readTime,
+    "image": image.asset->url
+  }`;
+  const data = await client.fetch(query);
+  return data;
+}
 
-const BlogPage = () => {
+const BlogPage = async () => {
+  const blogs: Blog[] = await getBlogs();
   return (
     <div className="pt-32 pb-20 min-h-screen bg-brand-black">
       <div className="container mx-auto px-4 md:px-6">
