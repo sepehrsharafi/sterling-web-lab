@@ -16,9 +16,10 @@ async function getBlogs() {
     category,
     date,
     readTime,
-    "image": image.asset->url
+    "image": image.asset->url,
+    "slug": slug.current
   }`;
-  const data = await client.fetch(query);
+  const data = await client.fetch(query, {}, { next: { tags: ["blog"] } });
   return data;
 }
 
@@ -50,40 +51,42 @@ const BlogPage = async () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
           {blogs.map((post) => (
-            <article key={post.id} className="group cursor-pointer">
-              <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-6">
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-                <div className="absolute top-4 left-4 z-20">
-                  <span className="px-3 py-1 bg-white/90 text-black text-xs font-bold rounded-full uppercase tracking-wider">
-                    {post.category}
-                  </span>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center gap-4 text-xs text-gray-500">
-                  <div className="flex items-center gap-1">
-                    <Calendar size={12} />
-                    <span>{post.date}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Clock size={12} />
-                    <span>{post.readTime}</span>
+            <Link href={`/blog/${post.slug}`} key={post.id}>
+              <article className="group cursor-pointer">
+                <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-6">
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="px-3 py-1 bg-white/90 text-black text-xs font-bold rounded-full uppercase tracking-wider">
+                      {post.category}
+                    </span>
                   </div>
                 </div>
-                <h2 className="text-2xl font-display font-bold group-hover:text-brand-accent transition-colors">
-                  {post.title}
-                </h2>
-                <p className="text-gray-400 line-clamp-2">{post.excerpt}</p>
-                <div className="flex items-center gap-1 text-brand-accent font-medium text-sm mt-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                  Read Article <ArrowUpRight size={14} />
+                <div className="space-y-3">
+                  <div className="flex items-center gap-4 text-xs text-gray-500">
+                    <div className="flex items-center gap-1">
+                      <Calendar size={12} />
+                      <span>{post.date}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Clock size={12} />
+                      <span>{post.readTime}</span>
+                    </div>
+                  </div>
+                  <h2 className="text-2xl font-display font-bold group-hover:text-brand-accent transition-colors">
+                    {post.title}
+                  </h2>
+                  <p className="text-gray-400 line-clamp-2">{post.excerpt}</p>
+                  <div className="flex items-center gap-1 text-brand-accent font-medium text-sm mt-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                    Read Article <ArrowUpRight size={14} />
+                  </div>
                 </div>
-              </div>
-            </article>
+              </article>
+            </Link>
           ))}
         </div>
       </div>

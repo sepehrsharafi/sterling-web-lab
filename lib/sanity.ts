@@ -5,4 +5,9 @@ export const client = createClient({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
   apiVersion: "2024-02-05",
   useCdn: false,
+  perspective: "published",
+  stega: {
+    enabled: false,
+    studioUrl: "/studio",
+  },
 });
