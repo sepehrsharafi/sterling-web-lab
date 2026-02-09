@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import { X, ExternalLink } from "lucide-react";
 import { ProjectItem } from "../types";
 import WorkArticle from "./WorkArticle";
@@ -98,10 +99,12 @@ const WorkClient: React.FC<WorkClientProps> = ({ projects }) => {
             </div>
             <div className="relative grid md:grid-cols-5 gap-0">
               <div className="md:col-span-3 overflow-hidden">
-                <img
+                <Image
                   src={selected.image}
                   alt={selected.client}
                   className="w-full h-full object-cover md:min-h-[520px]"
+                  width={800}
+                  height={520}
                 />
               </div>
               <div className="md:col-span-2 p-6 md:p-8 space-y-6 bg-black/40">

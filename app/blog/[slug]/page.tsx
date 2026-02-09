@@ -2,6 +2,7 @@ import { client } from "@/lib/sanity";
 import { Blog } from "@/types";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -19,6 +20,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: blog.title,
     description: blog.excerpt,
+    openGraph: {
+      title: blog.title,
+      description: blog.excerpt,
+      images: [
+        {
+          url: blog.image,
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.title,
+      description: blog.excerpt,
+      images: [blog.image],
+    },
   };
 }
 
@@ -85,10 +103,11 @@ const BlogDetailsPage = async ({ params }: Props) => {
           </div>
 
           <div className="relative aspect-[16/9] rounded-2xl overflow-hidden my-8">
-            <img
+            <Image
               src={blog.image}
               alt={blog.title}
               className="w-full h-full object-cover"
+              fill
             />
           </div>
 

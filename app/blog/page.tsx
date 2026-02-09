@@ -2,10 +2,12 @@ import { client } from "@/lib/sanity";
 import { Blog } from "@/types";
 import { ArrowLeft, ArrowUpRight, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Blog",
+  description: "Read our latest blog posts on design, technology, and more.",
 };
 
 async function getBlogs() {
@@ -55,10 +57,11 @@ const BlogPage = async () => {
               <article className="group cursor-pointer">
                 <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-6">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
-                  <img
+                  <Image
                     src={post.image}
                     alt={post.title}
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                    fill
                   />
                   <div className="absolute top-4 left-4 z-20">
                     <span className="px-3 py-1 bg-white/90 text-black text-xs font-bold rounded-full uppercase tracking-wider">

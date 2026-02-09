@@ -6,6 +6,11 @@ import Pricing from "@/components/Pricing";
 import ServicesHome from "@/components/ServicesHome";
 import Testimonials from "@/components/Testimonials";
 import Work from "@/components/Work";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home",
+};
 
 export default async function Home() {
   return (

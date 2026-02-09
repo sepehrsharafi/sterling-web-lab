@@ -1,5 +1,5 @@
-
 import React from "react";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { ProjectItem } from "../types";
 
@@ -10,16 +10,14 @@ interface WorkArticleProps {
 
 const WorkArticle: React.FC<WorkArticleProps> = ({ project, openModal }) => {
   return (
-    <div
-      className="group cursor-pointer"
-      onClick={() => openModal(project)}
-    >
+    <div className="group cursor-pointer" onClick={() => openModal(project)}>
       <div className="relative overflow-hidden rounded-2xl aspect-[4/3] mb-6">
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
-        <img
+        <Image
           src={project.image}
           alt={project.client}
           className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+          fill
         />
         <div className="absolute bottom-6 left-6 z-20 flex gap-2">
           <span className="px-3 py-1 bg-white/90 text-black text-xs font-bold rounded-full">
