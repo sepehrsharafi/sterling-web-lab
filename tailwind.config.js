@@ -21,9 +21,9 @@ module.exports = {
         }
       },
       animation: {
-        'loop-scroll': 'loop-scroll 25s linear infinite',
-        'blob': 'blob 7s infinite',
-        'float': 'float 6s ease-in-out infinite',
+        'loop-scroll': 'loop-scroll 40s linear infinite',
+        'blob': 'blob 10s infinite',
+        'float': 'float 8s ease-in-out infinite',
       },
       keyframes: {
         'loop-scroll': {
