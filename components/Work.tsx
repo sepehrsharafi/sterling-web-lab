@@ -27,7 +27,7 @@ const Work: React.FC = async () => {
   const projects = await getProjects();
 
   return (
-    <section id="work" className="py-24 bg-brand-dark">
+    <section id="work" className="py-24 bg-brand-dark scroll-mt-[70px]">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
           <h2 className="text-left text-4xl md:text-6xl font-display font-bold">

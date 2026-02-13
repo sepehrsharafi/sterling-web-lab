@@ -45,25 +45,17 @@ const ContactPage = () => {
                   </a>
                 </div>
               </div>
-              <div className="flex items-start gap-6">
-                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-brand-accent">
-                  <MapPin size={20} />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold mb-1">Visit Us</h3>
-                  <p className="text-gray-400">123 Innovation Dr.</p>
-                  <p className="text-gray-400">San Francisco, CA 94103</p>
-                </div>
-              </div>
+        
               <div className="flex items-start gap-6">
                 <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-brand-accent">
                   <Phone size={20} />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold mb-1">Call Us</h3>
-                  <p className="text-gray-400">+1 (555) 123-4567</p>
+                  <p className="text-gray-400">+98 915 409 3785</p>
+                  <p className="text-gray-400">+98 915 409 3785</p>
                   <p className="text-gray-500 text-sm mt-1">
-                    Mon-Fri, 9am-6pm PST
+                    All day, Every day.
                   </p>
                 </div>
               </div>

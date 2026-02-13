@@ -119,12 +119,12 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce z-10 -ml-[22px]">
+      {/* <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce z-10 -ml-[22px]">
         <span className="text-[10px] uppercase tracking-widest text-white">
           Scroll
         </span>
         <ArrowDown size={16} className="text-white" />
-      </div>
+      </div> */}
     </section>
   );
 };
