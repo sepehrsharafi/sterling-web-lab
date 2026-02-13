@@ -17,7 +17,7 @@ export interface Blog {
   readTime: string;
   image: string;
   slug: string;
-  content: PortableTextBlock[];
+  mainContent: PortableTextBlock[];
 }
 
 export interface NavItem {

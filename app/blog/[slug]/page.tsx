@@ -117,7 +117,7 @@ const BlogDetailsPage = async ({ params }: Props) => {
           </div>
 
           <div className="prose prose-invert prose-lg max-w-none mx-auto">
-            <PortableText value={blog.content} />
+            <PortableText value={blog.mainContent} />
           </div>
         </div>
       </div>
