@@ -47,7 +47,7 @@ async function getBlog(slug: string) {
     readTime,
     "image": image.asset->url,
     "slug": slug.current,
-    content
+    mainContent
   }[0]`;
   const data = await client.fetch(query, {}, { next: { tags: ["blog"] } });
   return data;
