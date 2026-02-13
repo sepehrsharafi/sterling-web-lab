@@ -17,25 +17,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return notFound();
   }
 
+  const image = blog.image ? [{ url: blog.image, width: 1200, height: 630 }] : [];
+  const twitterImages = blog.image ? [blog.image] : [];
+
   return {
     title: blog.title,
     description: blog.excerpt,
     openGraph: {
       title: blog.title,
       description: blog.excerpt,
-      images: [
-        {
-          url: blog.image,
-          width: 1200,
-          height: 630,
-        },
-      ],
+      images: image,
     },
     twitter: {
       card: "summary_large_image",
       title: blog.title,
       description: blog.excerpt,
-      images: [blog.image],
+      images: twitterImages,
     },
   };
 }
@@ -60,8 +57,10 @@ export async function generateStaticParams() {
   const query = `*[_type == "blog" && defined(slug.current)]{
     "slug": slug.current
   }`;
-  const data = await client.fetch(query);
-  return data;
+  const data = await client.fetch<{ slug: string }[]>(query);
+  return data.map((item) => ({
+    slug: item.slug,
+  }));
 }
 
 const BlogDetailsPage = async ({ params }: Props) => {
@@ -103,12 +102,18 @@ const BlogDetailsPage = async ({ params }: Props) => {
           </div>
 
           <div className="relative aspect-[16/9] rounded-2xl overflow-hidden my-8">
+            {blog.image ? (
             <Image
               src={blog.image}
               alt={blog.title}
               className="w-full h-full object-cover"
               fill
             />
+            ) : (
+              <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                <span className="text-gray-500">No Image</span>
+              </div>
+            )}
           </div>
 
           <div className="prose prose-invert prose-lg max-w-none mx-auto">
