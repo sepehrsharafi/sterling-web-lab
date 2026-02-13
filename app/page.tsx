@@ -1,13 +1,18 @@
-import Hero from '@/components/Hero';
-import Marquee from '@/components/Marquee';
-import Expertise from '@/components/Expertise';
-import ServicesHome from '@/components/ServicesHome';
-import Work from '@/components/Work';
-import Testimonials from '@/components/Testimonials';
-import Pricing from '@/components/Pricing';
-import ContactSection from '@/components/ContactSection';
+import ContactSection from "@/components/ContactSection";
+import Expertise from "@/components/Expertise";
+import Hero from "@/components/Hero";
+import Marquee from "@/components/Marquee";
+import Pricing from "@/components/Pricing";
+import ServicesHome from "@/components/ServicesHome";
+import Testimonials from "@/components/Testimonials";
+import Work from "@/components/Work";
+import { Metadata } from "next";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Home",
+};
+
+export default async function Home() {
   return (
     <>
       <Hero />

@@ -1,9 +1,12 @@
 import { ArrowLeft, Users, Trophy, Target, Globe } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Agancy",
+  title: "Agency",
+  description:
+    "Learn more about our agency and how we can help you grow your business.",
 };
 
 const AgencyPage = () => {
@@ -52,10 +55,11 @@ const AgencyPage = () => {
         {/* Culture Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-24">
           <div className="relative h-[500px] rounded-3xl overflow-hidden group">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
               alt="Team Collaboration"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              fill
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
               <h3 className="text-2xl font-bold">Collaborative by Design</h3>
@@ -105,10 +109,11 @@ const AgencyPage = () => {
         {/* Image Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[600px]">
           <div className="md:col-span-2 h-full rounded-3xl overflow-hidden relative group">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
               alt="Office"
               className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+              fill
             />
             <div className="absolute top-4 left-4 bg-white/10 backdrop-blur-md px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
               Headquarters
@@ -116,17 +121,19 @@ const AgencyPage = () => {
           </div>
           <div className="flex flex-col gap-4 h-full">
             <div className="h-1/2 rounded-3xl overflow-hidden relative group">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
                 alt="Brainstorming"
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                fill
               />
             </div>
             <div className="h-1/2 rounded-3xl overflow-hidden relative group">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
                 alt="Meeting"
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                fill
               />
             </div>
           </div>

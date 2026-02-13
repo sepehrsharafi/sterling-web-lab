@@ -1,3 +1,5 @@
+import { PortableTextBlock } from "@portabletext/types";
+
 export type PageView =
   | "home"
   | "about"
@@ -5,6 +7,18 @@ export type PageView =
   | "contact"
   | "agency"
   | "blog";
+
+export interface Blog {
+  id: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  date: string;
+  readTime: string;
+  image: string;
+  slug: string;
+  content: PortableTextBlock[];
+}
 
 export interface NavItem {
   label: string;

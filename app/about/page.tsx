@@ -1,9 +1,12 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Us",
+  description:
+    "Learn about Sterling Web Lab, a digital agency that specializes in web design, development, and branding.",
 };
 
 const AboutPage = () => {
@@ -38,10 +41,12 @@ const AboutPage = () => {
           </div>
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-brand-accent/20 to-blue-500/20 rounded-3xl transform rotate-3 scale-95 blur-xl" />
-            <img
+            <Image
               src="https://picsum.photos/800/800?random=10"
               alt="Team working"
               className="relative rounded-3xl w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+              width={800}
+              height={800}
             />
           </div>
         </div>
