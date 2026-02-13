@@ -1,4 +1,5 @@
 import { PortableTextBlock } from "@portabletext/types";
+export type { PortableImageBlock, PortableRichTextBlock } from "./types/portableText";
 
 export type PageView =
   | "home"

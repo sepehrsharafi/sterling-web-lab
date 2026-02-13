@@ -3,7 +3,7 @@ import { Blog } from "@/types";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { PortableText } from "@portabletext/react";
+import { RichPortableText } from "@/components/RichPortableText";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -118,8 +118,8 @@ const BlogDetailsPage = async ({ params }: Props) => {
             )}
           </div>
 
-          <div className="prose prose-invert prose-lg max-w-none mx-auto">
-            <PortableText value={blog.mainContent} />
+          <div className="max-w-none mx-auto">
+            <RichPortableText value={blog.mainContent} />
           </div>
         </div>
       </div>

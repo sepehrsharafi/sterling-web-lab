@@ -1,0 +1,202 @@
+import Image from "next/image"; 
+import { 
+  PortableText, 
+  type PortableTextReactComponents, 
+} from "@portabletext/react"; 
+import type { PortableTextBlock } from "@portabletext/types";
+import type { 
+  PortableImageBlock, 
+  PortableRichTextBlock, 
+} from "@/types/portableText"; 
+import clsx from "clsx";
+import { createImageUrlBuilder } from '@sanity/image-url';
+import { client } from '@/lib/sanity'; 
+
+
+function resolveImageDimensions(image?: PortableImageBlock["asset"]): { 
+  width: number; 
+  height: number; 
+} { 
+  const dimensions = image?.metadata?.dimensions; 
+  const fallbackWidth = 1200; 
+  const fallbackHeight = 800; 
+
+
+  if (!dimensions) { 
+    return { width: fallbackWidth, height: fallbackHeight }; 
+  } 
+
+
+  const width = Math.max(1, Math.round(dimensions.width ?? fallbackWidth)); 
+  const height = (() => { 
+    if (dimensions.height) { 
+      return Math.max(1, Math.round(dimensions.height)); 
+    } 
+
+
+    if (dimensions.aspectRatio && dimensions.aspectRatio > 0) { 
+      return Math.max(1, Math.round(width / dimensions.aspectRatio)); 
+    } 
+
+
+    return fallbackHeight; 
+  })(); 
+
+
+  return { width, height }; 
+} 
+
+
+const portableTextComponents: PortableTextReactComponents = { 
+  block: { 
+    normal: ({ children }) => ( 
+      <p className="whitespace-pre-line text-base leading-7 text-gray-300 2xl:text-xl"> 
+        {children} 
+      </p> 
+    ), 
+    p: ({ children }) => ( 
+      <p className="text-sm 2xl:text-2xl font-medium text-gray-300"> 
+        {children} 
+      </p> 
+    ), 
+    h1: ({ children }) => ( 
+      <h1 className="text-3xl font-semibold text-white 2xl:text-4xl"> 
+        {children} 
+      </h1> 
+    ), 
+    h2: ({ children }) => ( 
+      <h2 className="text-2xl font-semibold text-white 2xl:text-3xl"> 
+        {children} 
+      </h2> 
+    ), 
+    h3: ({ children }) => ( 
+      <h3 className="text-xl font-semibold text-white 2xl:text-2xl"> 
+        {children} 
+      </h3> 
+    ), 
+    blockquote: ({ children }) => ( 
+      <blockquote className="border-l-4 border-brand-accent pl-4 italic text-gray-300"> 
+        {children} 
+      </blockquote> 
+    ), 
+  }, 
+  list: { 
+    bullet: ({ children }) => ( 
+      <ul className="list-disc space-y-2 pl-6 text-gray-300 2xl:text-xl"> 
+        {children} 
+      </ul> 
+    ), 
+    number: ({ children }) => ( 
+      <ol className="list-decimal space-y-2 pl-6 text-gray-300 2xl:text-xl"> 
+        {children} 
+      </ol> 
+    ), 
+  }, 
+  listItem: { 
+    bullet: ({ children }) => <li className="leading-7">{children}</li>, 
+    number: ({ children }) => <li className="leading-7">{children}</li>, 
+  }, 
+  marks: { 
+    strong: ({ children }) => ( 
+      <strong className="font-semibold text-white">{children}</strong> 
+    ), 
+    em: ({ children }) => <em className="italic text-gray-300">{children}</em>, 
+    underline: ({ children }) => ( 
+      <span className="underline decoration-2 underline-offset-4 text-gray-300"> 
+        {children} 
+      </span> 
+    ), 
+    code: ({ children }) => ( 
+      <code className="rounded bg-gray-800 px-1 py-0.5 font-mono text-sm text-gray-300"> 
+        {children} 
+      </code> 
+    ), 
+    link: ({ children, value }) => { 
+      const href = typeof value?.href === "string" ? value.href : "#"; 
+      const isExternal = /^https?:\/\//i.test(href); 
+
+
+      return ( 
+        <a 
+          href={href} 
+          className="text-brand-accent underline underline-offset-4 transition-colors duration-150 hover:text-white" 
+          target={isExternal ? "_blank" : undefined} 
+          rel={isExternal ? "noopener noreferrer" : undefined} 
+        > 
+          {children} 
+        </a> 
+      ); 
+    }, 
+  }, 
+  types: { 
+    image: ({ value }) => { 
+      const imageValue = value as PortableImageBlock; 
+      
+      // Handle Sanity image URLs properly using the image URL builder
+      let src = '';
+      
+      if (imageValue.asset?._ref) {
+        // Use Sanity's image URL builder for proper image URLs
+        const builder = createImageUrlBuilder(client);
+        src = builder.image(imageValue.asset._ref).url();
+      } else if (imageValue.asset?.url) {
+        // Fallback to direct URL if available
+        src = imageValue.asset.url;
+      }
+
+      if (!src) { 
+        return null; 
+      } 
+
+
+      const { width, height } = resolveImageDimensions(imageValue.asset); 
+      const alt = imageValue.alt?.trim() || "Content illustration"; 
+      const caption = imageValue.caption?.trim(); 
+
+
+      return ( 
+        <figure className="my-6 overflow-hidden rounded-sm bg-gray-800 p-3 shadow-sm"> 
+          <Image 
+            src={src} 
+            alt={alt} 
+            width={width} 
+            height={height} 
+            className="mx-auto h-auto w-full rounded-sm object-cover" 
+            sizes="(min-width: 1280px) 960px, 100vw" 
+          /> 
+          {caption ? ( 
+            <figcaption className="mt-2 text-center text-sm text-gray-400"> 
+              {caption} 
+            </figcaption> 
+          ) : null} 
+        </figure> 
+      ); 
+    }, 
+  }, 
+  hardBreak: () => <br />, 
+  unknownMark: ({ children }) => <span>{children}</span>, 
+  unknownType: ({ children }) => <span>{children}</span>, 
+  unknownBlockStyle: ({ children }) => <p>{children}</p>, 
+  unknownList: ({ children }) => <ul>{children}</ul>, 
+  unknownListItem: ({ children }) => <li>{children}</li>, 
+}; 
+
+
+export interface RichPortableTextProps { 
+  value?: PortableTextBlock[]; 
+  className?: string; 
+} 
+
+
+export function RichPortableText({ value, className }: RichPortableTextProps) { 
+  if (!value?.length) { 
+    return null; 
+  } 
+
+
+  return ( 
+    <div className={clsx("flex flex-col gap-4 2xl:font-medium", className)}> 
+      <PortableText value={value} components={portableTextComponents} /> 
+    </div> 
+  ); 
+}
