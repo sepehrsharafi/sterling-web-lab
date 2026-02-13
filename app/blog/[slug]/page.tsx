@@ -12,7 +12,8 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const blog: Blog = await getBlog(params.slug);
+  const { slug } = await params;
+  const blog: Blog = await getBlog(slug);
   if (!blog) {
     return notFound();
   }
@@ -64,7 +65,8 @@ export async function generateStaticParams() {
 }
 
 const BlogDetailsPage = async ({ params }: Props) => {
-  const blog: Blog = await getBlog(params.slug);
+  const { slug } = await params;
+  const blog: Blog = await getBlog(slug);
 
   if (!blog) {
     return notFound();
