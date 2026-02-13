@@ -60,8 +60,10 @@ export async function generateStaticParams() {
   const query = `*[_type == "blog" && defined(slug.current)]{
     "slug": slug.current
   }`;
-  const data = await client.fetch(query);
-  return data;
+  const data = await client.fetch<{ slug: string }[]>(query);
+  return data.map((item) => ({
+    slug: item.slug,
+  }));
 }
 
 const BlogDetailsPage = async ({ params }: Props) => {
