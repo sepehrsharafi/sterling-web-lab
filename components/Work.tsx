@@ -1,25 +1,26 @@
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
 import { ProjectItem } from "../types";
+import { client } from "@/lib/sanity";
 import WorkClient from "./WorkClient";
 
 async function getProjects(): Promise<ProjectItem[]> {
-  try {
-    const sanityUrl = process.env.NEXT_PUBLIC_SANITY_URL;
-    if (!sanityUrl) {
-      console.error("Sanity URL is not defined in environment variables.");
-      return [];
-    }
-    const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
-    const response = await fetch(new URL(sanityUrl, baseUrl), {
-      cache: "no-store",
-    });
-    const data = await response.json();
-    return data.result || [];
-  } catch (error) {
-    console.error("Error fetching projects:", error);
-    return [];
-  }
+  const query = `*[_type == "project"]{
+    _id,
+    client,
+    category,
+    "image": image.asset->url,
+    stats,
+    description,
+    deliverables,
+    highlights,
+    tech,
+    result,
+    year,
+    link
+  }`;
+  const projects = await client.fetch(query);
+  return projects;
 }
 
 const Work: React.FC = async () => {
