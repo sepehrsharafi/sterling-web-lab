@@ -22,6 +22,7 @@ async function getBlogs() {
     "slug": slug.current
   }`;
   const data = await client.fetch(query, {}, { next: { tags: ["blog"] } });
+    console.log(data);
   return data;
 }
 
