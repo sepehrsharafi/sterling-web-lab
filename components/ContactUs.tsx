@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, useEffect } from "react";
 import { ArrowLeft, Mail, Phone, Send, Loader, Check, X } from "lucide-react";
 import Link from "next/link";
 import { sendEmail } from "@/app/actions/sendEmail";
@@ -14,10 +14,25 @@ function ContactUs() {
     message: "",
   });
   const [isPending, startTransition] = useTransition();
+  const [errors, setErrors] = useState<{
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    message?: string;
+  }>({});
   const [result, setResult] = useState<{
     success: boolean;
     message: string;
   } | null>(null);
+
+  useEffect(() => {
+    if (result?.success) {
+      const timer = setTimeout(() => {
+        setResult(null);
+      }, 5000); // 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [result]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -30,6 +45,23 @@ function ContactUs() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setResult(null);
+
+    const newErrors: {
+      firstName?: string;
+      lastName?: string;
+      email?: string;
+      message?: string;
+    } = {};
+    if (!formData.firstName) newErrors.firstName = "First name is required.";
+    if (!formData.lastName) newErrors.lastName = "Last name is required.";
+    if (!formData.email) newErrors.email = "Email is required.";
+    if (!formData.message) newErrors.message = "Message is required.";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     startTransition(async () => {
       const { success } = await sendEmail(formData);
       if (success) {
@@ -44,6 +76,7 @@ function ContactUs() {
           service: "Web Development",
           message: "",
         });
+        setErrors({});
       } else {
         setResult({
           success: false,
@@ -122,9 +155,15 @@ function ContactUs() {
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
-                    required
-                    className="bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:bg-white/5 transition-all"
+                    className={`bg-black/20 border ${
+                      errors.firstName ? "border-red-500" : "border-white/10"
+                    } rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:bg-white/5 transition-all`}
                   />
+                  {errors.firstName && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.firstName}
+                    </p>
+                  )}
                 </div>
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-medium text-gray-400">
@@ -135,9 +174,15 @@ function ContactUs() {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    required
-                    className="bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:bg-white/5 transition-all"
+                    className={`bg-black/20 border ${
+                      errors.lastName ? "border-red-500" : "border-white/10"
+                    } rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:bg-white/5 transition-all`}
                   />
+                  {errors.lastName && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.lastName}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -150,9 +195,13 @@ function ContactUs() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  required
-                  className="bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:bg-white/5 transition-all"
+                  className={`bg-black/20 border ${
+                    errors.email ? "border-red-500" : "border-white/10"
+                  } rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:bg-white/5 transition-all`}
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                )}
               </div>
 
               <div className="flex flex-col gap-2">
@@ -182,22 +231,33 @@ function ContactUs() {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  required
                   rows={5}
-                  className="bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:bg-white/5 transition-all resize-none"
+                  className={`bg-black/20 border ${
+                    errors.message ? "border-red-500" : "border-white/10"
+                  } rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-accent focus:bg-white/5 transition-all resize-none`}
                 ></textarea>
+                {errors.message && (
+                  <p className="text-red-500 text-xs mt-1">{errors.message}</p>
+                )}
               </div>
 
               {result && (
                 <div
-                  className={`flex items-center gap-2 p-3 rounded-lg ${
+                  className={`relative rounded-lg p-3 ${
                     result.success
                       ? "bg-green-500/10 text-green-400"
                       : "bg-red-500/10 text-red-400"
                   }`}
                 >
-                  {result.success ? <Check size={18} /> : <X size={18} />}
-                  <p className="text-sm">{result.message}</p>
+                  <div className="flex items-center gap-2">
+                    {result.success ? <Check size={18} /> : <X size={18} />}
+                    <p className="text-sm">{result.message}</p>
+                  </div>
+                  {result.success && (
+                    <div className="absolute bottom-0 left-0 h-1 w-full bg-green-500/20">
+                      <div className="h-1 bg-green-500 animate-progress"></div>
+                    </div>
+                  )}
                 </div>
               )}
 

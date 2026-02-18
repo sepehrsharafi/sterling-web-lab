@@ -8,27 +8,32 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)', 'sans-serif'],
-        display: ['var(--font-manrope)', 'sans-serif'],
+        sans: ["var(--font-inter)", "sans-serif"],
+        display: ["var(--font-manrope)", "sans-serif"],
       },
       colors: {
         brand: {
-          black: '#0a0a0a',
-          dark: '#121212',
-          gray: '#1E1E1E',
-          accent: '#00D4FF', // Electric Cyan / Sterling Blue
-          light: '#F4F4F5',
-        }
+          black: "#0a0a0a",
+          dark: "#121212",
+          gray: "#1E1E1E",
+          accent: "#00D4FF",
+          light: "#F4F4F5",
+        },
       },
       animation: {
-        'loop-scroll': 'loop-scroll 40s linear infinite',
-        'blob': 'blob 10s infinite',
-        'float': 'float 8s ease-in-out infinite',
+        "loop-scroll": "loop-scroll 40s linear infinite",
+        blob: "blob 10s infinite",
+        float: "float 8s ease-in-out infinite",
+        progress: "progress 5s linear forwards",
       },
       keyframes: {
-        'loop-scroll': {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(-100%)' },
+        "loop-scroll": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
+        },
+        progress: {
+          "0%": { width: "0%" },
+          "100%": { width: "100%" },
         },
         blob: {
           "0%": {
@@ -45,11 +50,11 @@ module.exports = {
           },
         },
         float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-20px)' },
-        }
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
       },
     },
   },
   plugins: [],
-}
+};
