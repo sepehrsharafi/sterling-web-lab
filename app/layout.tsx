@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { site } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
@@ -12,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sterling-web-lab.vercel.app"),
+  metadataBase: new URL(site.url),
   title: {
     default: "Sterling Web Lab | Digital Agency",
     template: `%s | Sterling Web Lab`,
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     title: "Sterling Web Lab | Digital Agency",
     description:
       "Sterling Web Lab is a digital agency that specializes in web design, development, and branding.",
-    url: "https://sterling-web-lab.vercel.app",
+    url: site.url,
     siteName: "Sterling Web Lab",
     images: [
       {

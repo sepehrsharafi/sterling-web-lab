@@ -6,7 +6,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Blogs",
   description: "Read our latest blog posts on design, technology, and more.",
 };
 
