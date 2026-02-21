@@ -3,7 +3,7 @@ import { Blog } from "@/types";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { PortableText } from "@portabletext/react";
+import { RichPortableText } from "@/components/RichPortableText";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -12,26 +12,33 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const blog: Blog = await getBlog(params.slug);
+  const { slug } = await params;
+  const blog: Blog = await getBlog(slug);
   if (!blog) {
     return notFound();
   }
 
-  const image = blog.image ? [{ url: blog.image, width: 1200, height: 630 }] : [];
+  // Use SEO metadata if available, otherwise fall back to basic fields
+  const metaTitle = blog.seo?.metaTitle || blog.title;
+  const metaDescription = blog.seo?.metaDescription || blog.excerpt;
+
+  const image = blog.image
+    ? [{ url: blog.image, width: 1200, height: 630 }]
+    : [];
   const twitterImages = blog.image ? [blog.image] : [];
 
   return {
-    title: blog.title,
-    description: blog.excerpt,
+    title: metaTitle,
+    description: metaDescription,
     openGraph: {
-      title: blog.title,
-      description: blog.excerpt,
+      title: metaTitle,
+      description: metaDescription,
       images: image,
     },
     twitter: {
       card: "summary_large_image",
-      title: blog.title,
-      description: blog.excerpt,
+      title: metaTitle,
+      description: metaDescription,
       images: twitterImages,
     },
   };
@@ -47,7 +54,8 @@ async function getBlog(slug: string) {
     readTime,
     "image": image.asset->url,
     "slug": slug.current,
-    content
+    mainContent,
+    seo
   }[0]`;
   const data = await client.fetch(query, {}, { next: { tags: ["blog"] } });
   return data;
@@ -64,7 +72,8 @@ export async function generateStaticParams() {
 }
 
 const BlogDetailsPage = async ({ params }: Props) => {
-  const blog: Blog = await getBlog(params.slug);
+  const { slug } = await params;
+  const blog: Blog = await getBlog(slug);
 
   if (!blog) {
     return notFound();
@@ -103,12 +112,12 @@ const BlogDetailsPage = async ({ params }: Props) => {
 
           <div className="relative aspect-[16/9] rounded-2xl overflow-hidden my-8">
             {blog.image ? (
-            <Image
-              src={blog.image}
-              alt={blog.title}
-              className="w-full h-full object-cover"
-              fill
-            />
+              <Image
+                src={blog.image}
+                alt={blog.title}
+                className="w-full h-full object-cover"
+                fill
+              />
             ) : (
               <div className="w-full h-full bg-gray-800 flex items-center justify-center">
                 <span className="text-gray-500">No Image</span>
@@ -116,8 +125,8 @@ const BlogDetailsPage = async ({ params }: Props) => {
             )}
           </div>
 
-          <div className="prose prose-invert prose-lg max-w-none mx-auto">
-            <PortableText value={blog.content} />
+          <div className="max-w-none mx-auto">
+            <RichPortableText value={blog.mainContent} />
           </div>
         </div>
       </div>

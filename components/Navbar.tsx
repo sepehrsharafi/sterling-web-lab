@@ -4,6 +4,7 @@ import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { NavItem } from '../types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSmoothScroll } from '@/lib/useSmoothScroll';
 
 const navItems: NavItem[] = [
   { label: 'Work', href: '/#work' },
@@ -17,6 +18,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  
+  // Initialize smooth scrolling
+  useSmoothScroll();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,8 +39,22 @@ const Navbar = () => {
     }
   }, [isOpen]);
 
-  const handleNavClick = () => {
+  const handleNavClick = (href?: string) => {
     setIsOpen(false);
+    
+    // Handle work section scrolling
+    if (href === '/#work') {
+      setTimeout(() => {
+        const workSection = document.getElementById('work');
+        if (workSection) {
+          const offsetTop = workSection.offsetTop - 70;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    }
   };
 
   return (
@@ -58,7 +76,7 @@ const Navbar = () => {
               <Link
                 key={item.label}
                 href={item.href}
-                onClick={handleNavClick}
+                onClick={() => handleNavClick(item.href)}
                 className={item.isButton 
                   ? "group flex items-center gap-2 px-4 py-2 bg-white text-black rounded-full text-lg font-medium hover:bg-brand-accent hover:text-white transition-all duration-300"
                   : `text-xl font-medium transition-colors hover:text-brand-accent ${
@@ -94,7 +112,7 @@ const Navbar = () => {
             <Link
               key={item.label}
               href={item.href}
-              onClick={handleNavClick}
+              onClick={() => handleNavClick(item.href)}
               className={`text-4xl font-display font-bold tracking-tight transition-all duration-300 hover:scale-105 ${
                   item.isButton ? 'text-brand-accent' : 'text-white'
               }`}

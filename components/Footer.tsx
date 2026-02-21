@@ -85,7 +85,7 @@ const Footer: React.FC<FooterProps> = ({ onChangeView }) => {
       <div className="container mx-auto px-4 md:px-6 pt-24 pb-12">
         <div className="flex flex-col items-center text-center mb-24 relative z-10">
           <h2 className="text-4xl md:text-7xl font-display font-bold mb-8 leading-tight">
-            Have an idea? <br /> Let's enter the
+            Have an idea? <br /> Let's enter the {" "}
             <span className="text-brand-accent">lab.</span>
           </h2>
           <Link

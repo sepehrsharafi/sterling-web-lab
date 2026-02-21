@@ -1,62 +1,88 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowRight } from "lucide-react";
 
 const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      // Calculate mouse position relative to window center
-      const x = (e.clientX / window.innerWidth - 0.5) * 40; // Movement range
-      const y = (e.clientY / window.innerHeight - 0.5) * 40;
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setIsReducedMotion(mediaQuery.matches);
 
-      // Apply to CSS variables for smooth GPU transitions
-      containerRef.current.style.setProperty("--move-x", `${x}px`);
-      containerRef.current.style.setProperty("--move-y", `${y}px`);
+    const handleChange = (e: MediaQueryListEvent) => {
+      setIsReducedMotion(e.matches);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+    mediaQuery.addEventListener('change', handleChange);
+
+    // Only add mouse move listener if not reduced motion and device has enough memory
+    const deviceMemory = (navigator as any).deviceMemory;
+    if (!isReducedMotion && (!deviceMemory || deviceMemory > 2)) {
+      const handleMouseMove = (e: MouseEvent) => {
+        if (!containerRef.current) return;
+        // Reduced movement range for better performance
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+        // Use transform instead of CSS variables for better GPU performance
+        const blob1 = containerRef.current.querySelector('.blob-1') as HTMLElement;
+        const blob2 = containerRef.current.querySelector('.blob-2') as HTMLElement;
+        
+        if (blob1) {
+          blob1.style.transform = `translate(${x}px, ${y}px)`;
+        }
+        if (blob2) {
+          blob2.style.transform = `translate(${-x * 1.5}px, ${-y * 1.5}px)`;
+        }
+      };
+
+      window.addEventListener("mousemove", handleMouseMove, { passive: true });
+      return () => window.removeEventListener("mousemove", handleMouseMove);
+    }
+
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, [isReducedMotion]);
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-brand-black selection:bg-brand-accent selection:text-white">
-      {/* BACKGROUND LAYER - Strictly z-0 */}
+      {/* BACKGROUND LAYER - Optimized for mobile performance */}
       <div
         ref={containerRef}
         className="absolute inset-0 w-full h-full z-0 pointer-events-none"
       >
-        {/* 1. Base Dark Grid (Dot Matrix Style) */}
+        {/* 1. Base Dark Grid - Reduced opacity and complexity */}
         <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-10"
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)`,
-            backgroundSize: "32px 32px",
-            maskImage:
-              "radial-gradient(ellipse at center, black 40%, transparent 80%)",
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.2) 1px, transparent 0)`,
+            backgroundSize: "40px 40px",
+            maskImage: "radial-gradient(ellipse at center, black 50%, transparent 90%)",
           }}
         ></div>
 
-        {/* 2. Interactive Glowing Blobs - STERLING COLORS (Cyan/Blue) */}
-        <div
-          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-brand-accent/20 rounded-full blur-[120px] mix-blend-screen animate-blob will-change-transform"
-          style={{ transform: "translate(var(--move-x), var(--move-y))" }}
-        />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-2000 will-change-transform"
-          style={{
-            transform:
-              "translate(calc(var(--move-x) * -1.5), calc(var(--move-y) * -1.5))",
-          }}
-        />
+        {/* 2. Optimized Blobs - Smaller, less blur, simpler animations */}
+        {!isReducedMotion && (
+          <>
+            <div
+              className="blob-1 absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[400px] md:h-[400px] bg-brand-accent/15 rounded-full blur-[60px] mix-blend-screen animate-blob"
+              style={{ transform: "translate(0, 0)" }}
+            />
+            <div
+              className="blob-2 absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[350px] md:h-[350px] bg-blue-600/15 rounded-full blur-[60px] mix-blend-screen animate-blob animation-delay-2000"
+              style={{ transform: "translate(0, 0)" }}
+            />
+          </>
+        )}
 
-        {/* 3. Central Glow for Text Readability */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-900/10 rounded-full blur-[100px] mix-blend-screen" />
+        {/* 3. Central Glow - Reduced size and blur */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[200px] md:w-[600px] md:h-[300px] bg-cyan-900/10 rounded-full blur-[80px] mix-blend-screen" />
 
-        {/* 4. Subtle Noise Texture */}
-        <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+        {/* 4. Subtle Noise Texture - Only on desktop */}
+        {!isReducedMotion && (
+          <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+        )}
       </div>
 
       {/* CONTENT LAYER - Strictly z-10 */}
@@ -119,12 +145,12 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce z-10 -ml-[22px]">
+      {/* <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce z-10 -ml-[22px]">
         <span className="text-[10px] uppercase tracking-widest text-white">
           Scroll
         </span>
         <ArrowDown size={16} className="text-white" />
-      </div>
+      </div> */}
     </section>
   );
 };

@@ -34,12 +34,11 @@ const AgencyPage = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24 border-y border-white/10 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24 border-y border-white/10 py-12">
           {[
-            { label: "Projects Shipped", value: "250+" },
-            { label: "Awards Won", value: "14" },
+            { label: "Projects Shipped", value: "27+" },
             { label: "Happy Clients", value: "98%" },
-            { label: "Years Active", value: "5+" },
+            { label: "Years Active", value: "4+" },
           ].map((stat, i) => (
             <div key={i}>
               <div className="text-3xl md:text-5xl font-display font-bold text-white mb-2">
@@ -110,19 +109,16 @@ const AgencyPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[600px]">
           <div className="md:col-span-2 h-full rounded-3xl overflow-hidden relative group">
             <Image
-              src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+              src="/agancy-footer-1.png"
               alt="Office"
               className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
               fill
             />
-            <div className="absolute top-4 left-4 bg-white/10 backdrop-blur-md px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-              Headquarters
-            </div>
           </div>
           <div className="flex flex-col gap-4 h-full">
             <div className="h-1/2 rounded-3xl overflow-hidden relative group">
               <Image
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                src="/agancy-footer-2.png"
                 alt="Brainstorming"
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                 fill
@@ -130,7 +126,7 @@ const AgencyPage = () => {
             </div>
             <div className="h-1/2 rounded-3xl overflow-hidden relative group">
               <Image
-                src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                src="/agancy-footer-3.png"
                 alt="Meeting"
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                 fill

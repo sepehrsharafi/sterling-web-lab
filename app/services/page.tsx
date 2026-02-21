@@ -12,11 +12,11 @@ const ServicesPage = () => {
       icon: <Code className="w-10 h-10 text-brand-accent" />,
       title: "Web Development",
       description:
-        "We build scalable, high-performance websites using the latest technologies like React, Next.js, and Node.js. Our code is clean, SEO-friendly, and built for speed.",
+        "We build scalable, high-performance websites using the latest technologies like React, Next.js, Node.js and Laravel. Our code is clean, SEO-friendly, and built for speed.",
       features: [
         "Custom Web Apps",
-        "CMS Development",
-        "E-commerce Solutions",
+        "CMS Integrations",
+        "Non-Native Mobile App",
         "API Integrations",
       ],
     },
@@ -32,18 +32,18 @@ const ServicesPage = () => {
         "Brand Identity",
       ],
     },
-    {
-      icon: <TrendingUp className="w-10 h-10 text-brand-accent" />,
-      title: "Digital Marketing",
-      description:
-        "We don't just build websites; we help you grow. Our data-driven marketing strategies ensure your message reaches the right audience at the right time.",
-      features: [
-        "SEO Optimization",
-        "Content Strategy",
-        "Social Media Marketing",
-        "PPC Campaigns",
-      ],
-    },
+    // {
+    //   icon: <TrendingUp className="w-10 h-10 text-brand-accent" />,
+    //   title: "Digital Marketing",
+    //   description:
+    //     "We don't just build websites; we help you grow. Our data-driven marketing strategies ensure your message reaches the right audience at the right time.",
+    //   features: [
+    //     "SEO Optimization",
+    //     "Content Strategy",
+    //     "Social Media Marketing",
+    //     "PPC Campaigns",
+    //   ],
+    // },
     {
       icon: <Monitor className="w-10 h-10 text-brand-accent" />,
       title: "Maintenance & Support",

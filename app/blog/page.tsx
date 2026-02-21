@@ -19,10 +19,10 @@ async function getBlogs() {
     date,
     readTime,
     "image": image.asset->url,
-    "slug": slug.current
+    "slug": slug.current,
+    seo
   }`;
   const data = await client.fetch(query, {}, { next: { tags: ["blog"] } });
-    console.log(data);
   return data;
 }
 
@@ -59,12 +59,12 @@ const BlogPage = async () => {
                 <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-6">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
                   {post.image ? (
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                    fill
-                  />
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                      fill
+                    />
                   ) : (
                     <div className="w-full h-full bg-gray-800 flex items-center justify-center">
                       <span className="text-gray-500">No Image</span>

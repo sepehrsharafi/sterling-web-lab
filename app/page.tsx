@@ -6,6 +6,7 @@ import Pricing from "@/components/Pricing";
 import ServicesHome from "@/components/ServicesHome";
 import Testimonials from "@/components/Testimonials";
 import Work from "@/components/Work";
+import { ScrollHandler } from "@/components/ScrollHandler";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 export default async function Home() {
   return (
     <>
+      <ScrollHandler />
       <Hero />
       <Marquee />
       <Expertise />
@@ -22,7 +24,7 @@ export default async function Home() {
       <Work />
       <Testimonials />
       <Pricing />
-      <ContactSection />
+      {/* <ContactSection /> */}
     </>
   );
 }

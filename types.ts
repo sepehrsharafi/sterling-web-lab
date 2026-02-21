@@ -1,4 +1,8 @@
 import { PortableTextBlock } from "@portabletext/types";
+export type {
+  PortableImageBlock,
+  PortableRichTextBlock,
+} from "./types/portableText";
 
 export type PageView =
   | "home"
@@ -17,7 +21,11 @@ export interface Blog {
   readTime: string;
   image: string;
   slug: string;
-  content: PortableTextBlock[];
+  mainContent: PortableTextBlock[];
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+  };
 }
 
 export interface NavItem {
