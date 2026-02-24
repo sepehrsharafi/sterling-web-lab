@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "About Us",
   description:
     "Learn about Sterling Web Lab, a digital agency that specializes in web design, development, and branding.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 const AboutPage = () => {

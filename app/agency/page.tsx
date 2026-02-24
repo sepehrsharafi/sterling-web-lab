@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Agency",
   description:
     "Learn more about our agency and how we can help you grow your business.",
+  alternates: {
+    canonical: "/agency",
+  },
 };
 
 const AgencyPage = () => {
