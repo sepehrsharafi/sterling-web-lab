@@ -9,12 +9,13 @@ type BlogSitemapEntry = {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: site.url, changeFrequency: "weekly", priority: 1 },
-    { url: `${site.url}/about`, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${site.url}/services`, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${site.url}/agency`, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${site.url}/blog`, changeFrequency: "daily", priority: 0.9 },
-    { url: `${site.url}/contact`, changeFrequency: "monthly", priority: 0.7 },
+    { url: site.url, priority: 1 },
+    { url: `${site.url}/about`, priority: 0.8 },
+    { url: `${site.url}/services`, priority: 0.8 },
+    { url: `${site.url}/agency`, priority: 0.7 },
+    { url: `${site.url}/blog`, priority: 0.9 },
+    { url: `${site.url}/contact`, priority: 0.7 },
+    { url: `${site.url}/sitemap`, priority: 0.4 },
   ];
 
   const blogs = await client.fetch<BlogSitemapEntry[]>(
@@ -29,7 +30,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogRoutes: MetadataRoute.Sitemap = blogs.map((blog) => ({
     url: `${site.url}/blog/${blog.slug}`,
     lastModified: blog.updatedAt ? new Date(blog.updatedAt) : undefined,
-    changeFrequency: "weekly",
     priority: 0.7,
   }));
 

@@ -125,9 +125,11 @@ const Footer: React.FC<FooterProps> = ({ onChangeView }) => {
             <ul className="space-y-4">
               {[
                 { label: "Work", href: "/#work" },
+                { label: "About", href: "/about" },
                 { label: "Services", href: "/services" },
                 { label: "Agency", href: "/agency" },
                 { label: "Blog", href: "/blog" },
+                { label: "Sitemap", href: "/sitemap" },
               ].map((item) => (
                 <li key={item.label}>
                   <Link

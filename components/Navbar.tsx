@@ -8,6 +8,7 @@ import { useSmoothScroll } from '@/lib/useSmoothScroll';
 
 const navItems: NavItem[] = [
   { label: 'Work', href: '/#work' },
+  { label: 'About', href: '/about' },
   { label: 'Services', href: '/services' },
   { label: 'Agency', href: '/agency' },
   { label: 'Blog', href: '/blog' },

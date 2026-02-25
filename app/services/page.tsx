@@ -1,6 +1,8 @@
 import { ArrowLeft, Code, PenTool, TrendingUp, Monitor } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
+import SeoBreadcrumbs from "@/components/SeoBreadcrumbs";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -63,6 +65,12 @@ const ServicesPage = () => {
 
   return (
     <div className="pt-32 pb-20 min-h-screen bg-brand-black">
+      <SeoBreadcrumbs
+        items={[
+          { name: "Home", url: site.url },
+          { name: "Services", url: `${site.url}/services` },
+        ]}
+      />
       <div className="container mx-auto px-4 md:px-6">
         <Link
           href="/"

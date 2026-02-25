@@ -6,6 +6,8 @@ import Image from "next/image";
 import { RichPortableText } from "@/components/RichPortableText";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import SeoBreadcrumbs from "@/components/SeoBreadcrumbs";
+import { site } from "@/lib/site";
 
 type Props = {
   params: { slug: string };
@@ -85,6 +87,13 @@ const BlogDetailsPage = async ({ params }: Props) => {
 
   return (
     <div className="pt-32 pb-20 min-h-screen bg-brand-black">
+      <SeoBreadcrumbs
+        items={[
+          { name: "Home", url: site.url },
+          { name: "Blog", url: `${site.url}/blog` },
+          { name: blog.title, url: `${site.url}/blog/${blog.slug}` },
+        ]}
+      />
       <div className="container mx-auto px-4 md:px-6">
         <Link
           href="/blog"
