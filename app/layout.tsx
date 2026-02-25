@@ -86,7 +86,7 @@ export default function RootLayout({
       {
         "@type": "SiteNavigationElement",
         name: "Sitemap",
-        url: `${site.url}/sitemap`,
+        url: `${site.url}/site-map`,
       },
     ],
   };

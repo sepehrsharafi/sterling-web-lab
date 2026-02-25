@@ -15,7 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${site.url}/agency`, priority: 0.7 },
     { url: `${site.url}/blog`, priority: 0.9 },
     { url: `${site.url}/contact`, priority: 0.7 },
-    { url: `${site.url}/sitemap`, priority: 0.4 },
+    { url: `${site.url}/site-map`, priority: 0.4 },
   ];
 
   const blogs = await client.fetch<BlogSitemapEntry[]>(

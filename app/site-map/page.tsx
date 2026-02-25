@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Sitemap",
   description: "Browse a complete list of Sterling Web Lab pages and posts.",
   alternates: {
-    canonical: "/sitemap",
+    canonical: "/site-map",
   },
 };
 
@@ -33,7 +33,7 @@ const SitemapPage = async () => {
       <SeoBreadcrumbs
         items={[
           { name: "Home", url: site.url },
-          { name: "Sitemap", url: `${site.url}/sitemap` },
+          { name: "Sitemap", url: `${site.url}/site-map` },
         ]}
       />
       <div className="container mx-auto px-4 md:px-6">

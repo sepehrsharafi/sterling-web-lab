@@ -129,7 +129,7 @@ const Footer: React.FC<FooterProps> = ({ onChangeView }) => {
                 { label: "Services", href: "/services" },
                 { label: "Agency", href: "/agency" },
                 { label: "Blog", href: "/blog" },
-                { label: "Sitemap", href: "/sitemap" },
+                { label: "Sitemap", href: "/site-map" },
               ].map((item) => (
                 <li key={item.label}>
                   <Link
