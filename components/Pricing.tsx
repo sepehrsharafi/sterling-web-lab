@@ -5,13 +5,13 @@ import { PricingPlan } from '../types';
 const plans: PricingPlan[] = [
   {
     name: "Starter",
-    price: "$2,500",
-    features: ["Custom Landing Page", "Mobile Responsive", "Basic SEO Setup", "1 Month Support"]
+    price: "$1,499",
+    features: ["Custom Landing Page", "Mobile Responsive", "Basic SEO Setup", "Unlimited Support"]
   },
   {
     name: "Growth",
-    price: "$5,000",
-    features: ["5 Page Website", "CMS Integration", "Advanced SEO", "Analytics Dashboard", "3 Months Support"],
+    price: "$3,499",
+    features: ["5 Page Website", "CMS Integration", "Advanced SEO", "Google Ads Setup & Management", "Unlimited Support"],
     isPopular: true
   },
   {

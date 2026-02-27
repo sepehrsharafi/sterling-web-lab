@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 async function getBlogs() {
-  const query = `*[_type == "blog"]{
+  const query = `*[_type == "blog"] | order(date desc){
     "id": _id,
     title,
     excerpt,
