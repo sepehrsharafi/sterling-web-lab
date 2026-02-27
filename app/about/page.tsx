@@ -93,19 +93,6 @@ const AboutPage = () => {
             ))}
           </div>
         </div>
-
-        <div className="text-center bg-white/5 rounded-3xl p-16 border border-white/5">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Ready to join the lab?
-          </h2>
-          <p className="text-gray-400 mb-8 max-w-xl mx-auto">
-            We are always looking for talented individuals to join our
-            remote-first team.
-          </p>
-          <button className="px-8 py-3 bg-white text-black font-semibold rounded-full hover:bg-brand-accent hover:text-white transition-colors">
-            View Openings
-          </button>
-        </div>
       </div>
     </div>
   );
