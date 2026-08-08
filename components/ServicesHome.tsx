@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
@@ -9,28 +9,28 @@ const services = [
     title: "Web Design",
     description:
       "We craft award-winning sites that are not just beautiful but performant.",
-    image: "https://picsum.photos/400/300?random=20",
+    image: "/help-section/tirza-van-dijk-o1SKqmgSDbg-unsplash.jpg",
   },
   {
     id: 2,
     title: "Development",
     description:
       "From simple CMS to complex web apps, we build scalable solutions.",
-    image: "https://picsum.photos/400/300?random=21",
+    image: "/help-section/luca-bravo-XJXWbfSo2f0-unsplash.jpg",
   },
   {
     id: 3,
     title: "Branding",
     description:
       "Identities that speak to your audience and stand the test of time.",
-    image: "https://picsum.photos/400/300?random=22",
+    image: "/help-section/job-vermeulen-qiUMSb2-IDQ-unsplash.jpg",
   },
   {
     id: 4,
     title: "SEO & Marketing",
     description:
       "Data-driven strategies to get your brand seen by the right people.",
-    image: "https://picsum.photos/400/300?random=23",
+    image: "/help-section/stephen-phillips-hostreviews-co-uk-shr_Xn8S8QU-unsplash.jpg",
   },
 ];
 
@@ -40,7 +40,6 @@ const ServicesHome: React.FC = () => {
   const [imageLoaded, setImageLoaded] = useState<{[key: number]: boolean}>({});
 
   useEffect(() => {
-    // Detect low performance devices
     const detectLowPerformance = () => {
       const userAgent = navigator.userAgent;
       const isOldDevice = /iPhone OS [1-9]_|Android [1-6]\./.test(userAgent);
@@ -69,7 +68,6 @@ const ServicesHome: React.FC = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-12 items-center">
-          {/* List */}
           <div className="w-full lg:w-1/2 flex flex-col gap-2">
             {services.map((service, index) => (
               <div
@@ -112,7 +110,6 @@ const ServicesHome: React.FC = () => {
             ))}
           </div>
 
-          {/* Image Preview - Optimized for performance */}
           <div className="w-full lg:w-1/2 h-[300px] md:h-[400px] relative rounded-3xl overflow-hidden hidden md:block">
             {services.map((service, index) => (
               <div
