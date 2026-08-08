@@ -66,8 +66,22 @@ export const fallbackBlogs: Blog[] = [
   },
 ];
 
-const listingQuery = `*[_type == "blog"] | order(date desc){"id":_id,title,excerpt,category,date,readTime,"image":image.asset->url,"slug":slug.current,seo}`;
-const articleQuery = `*[_type == "blog" && slug.current == $slug]{"id":_id,title,excerpt,category,date,readTime,"image":image.asset->url,"slug":slug.current,mainContent,seo}[0]`;
+const seoProjection = `"seo":{
+  "metaTitle":coalesce(seo.metaTitle,metaTitle,seoTitle),
+  "metaDescription":coalesce(seo.metaDescription,metaDescription,seoDescription),
+  "image":coalesce(
+    seo.openGraphImage.asset->url,
+    seo.ogImage.asset->url,
+    seo.metaImage.asset->url,
+    seo.socialImage.asset->url,
+    seo.image.asset->url,
+    openGraphImage.asset->url,
+    ogImage.asset->url,
+    seoImage.asset->url
+  )
+}`;
+const listingQuery = `*[_type == "blog"] | order(date desc){"id":_id,title,excerpt,category,date,readTime,"image":image.asset->url,"slug":slug.current,${seoProjection}}`;
+const articleQuery = `*[_type == "blog" && slug.current == $slug]{"id":_id,title,excerpt,category,date,readTime,"image":image.asset->url,"slug":slug.current,mainContent,${seoProjection}}[0]`;
 
 export async function getBlogs() {
   const remote = await client.fetch<Blog[]>(listingQuery, {}, { next: { tags: ["blog"] } }).catch(() => []);

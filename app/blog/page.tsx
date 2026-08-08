@@ -86,7 +86,7 @@ export default async function BlogPage() {
               <article className="flex flex-col justify-between p-7 sm:p-10 lg:p-12">
                 <div>
                   <p className="micro-label">{featured.category || "Insight"}</p>
-                  <h2 className="mt-6 max-w-xl text-[clamp(2rem,3vw,3.25rem)] font-medium leading-[1.02] tracking-[-.045em]">
+                  <h2 className="mt-6 max-w-xl text-[clamp(1.65rem,2.2vw,2.35rem)] font-medium leading-[1.08] tracking-[-.035em]">
                     {featured.title}
                   </h2>
                   <p className="mt-5 max-w-lg text-base leading-7 text-[#5d6769]">{featured.excerpt}</p>

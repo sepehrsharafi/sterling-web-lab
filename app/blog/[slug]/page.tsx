@@ -5,13 +5,41 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Calendar, Clock } from "lucide-react";
 import { RichPortableText } from "@/components/RichPortableText";
 import { getBlog, getBlogSlugs } from "@/lib/blogs";
+import { site } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 const readableDate = (date?: string) => date ? new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T00:00:00`)) : "";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const blog = await getBlog((await params).slug);
-  return blog ? { title: blog.seo?.metaTitle || blog.title, description: blog.seo?.metaDescription || blog.excerpt, alternates: { canonical: `/blog/${blog.slug}` } } : { title: "Article" };
+  if (!blog) return { title: "Article" };
+  const title = blog.seo?.metaTitle?.trim() || blog.title;
+  const description = blog.seo?.metaDescription?.trim() || blog.excerpt;
+  const image = blog.seo?.image || blog.image;
+  const url = `${site.url}/blog/${blog.slug}`;
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: site.name,
+      locale: site.locale,
+      type: "article",
+      publishedTime: blog.date || undefined,
+      authors: [site.name],
+      tags: blog.category ? [blog.category] : undefined,
+      images: image ? [{ url: image, alt: blog.title }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
 }
 
 export async function generateStaticParams() { return getBlogSlugs(); }
@@ -27,7 +55,7 @@ export default async function BlogDetailsPage({ params }: Props) {
         <Link href="/blog" className="group inline-flex items-center gap-2 text-sm text-[#59666b] transition hover:text-[#25292a]"><ArrowLeft size={15} className="transition-transform group-hover:-translate-x-1"/>All insights</Link>
         <div className="mt-12 max-w-[960px]">
           <p className="micro-label">{blog.category || "Insight"}</p>
-          <h1 className="mt-6 text-[clamp(2.65rem,4.3vw,4.35rem)] font-medium leading-[1.02] tracking-[-.04em]">{blog.title}</h1>
+          <h1 className="mt-6 max-w-[900px] text-[clamp(2.15rem,3.2vw,3.35rem)] font-medium leading-[1.08] tracking-[-.032em]">{blog.title}</h1>
           {blog.excerpt && <p className="mt-7 max-w-3xl text-lg leading-8 text-[#566164]">{blog.excerpt}</p>}
           <div className="mt-8 flex flex-wrap items-center gap-5 text-sm text-[#667174]"><span className="flex items-center gap-2"><Calendar size={15}/>{readableDate(blog.date)}</span>{blog.readTime&&<span className="flex items-center gap-2"><Clock size={15}/>{blog.readTime}</span>}<span className="hidden h-5 w-px bg-[#aeb6b8] sm:block"/><span>By Sterling Web Lab</span></div>
         </div>

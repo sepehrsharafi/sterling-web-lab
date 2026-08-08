@@ -25,6 +25,7 @@ export interface Blog {
   seo?: {
     metaTitle?: string;
     metaDescription?: string;
+    image?: string;
   };
 }
 
