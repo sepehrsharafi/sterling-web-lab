@@ -3,7 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 
-export const metadata: Metadata = { title: "About", alternates: { canonical: "/about" } };
+export const metadata: Metadata = {
+  title: "About",
+  description: "Learn how Sterling Web Lab combines strategy, design, and development to create more credible, useful websites for service businesses.",
+  alternates: { canonical: "/about" },
+};
 
 const principles = [
   {
@@ -56,14 +60,14 @@ export default function AboutPage() {
                 <span className="text-[#667376]">Serious about detail.</span>
               </h1>
               <p className="mt-7 max-w-xl text-lg leading-8 text-[#535f62]">
-                A focused web studio for businesses that need to earn trust, explain their value clearly, and make the
+                A focused web agency for businesses that need to earn trust, explain their value clearly, and make the
                 next step easy.
               </p>
             </div>
 
             <aside className="relative overflow-hidden rounded-[1.5rem] bg-[#2d3536] p-7 text-white shadow-[0_24px_60px_rgba(36,45,46,.14)] sm:p-9">
               <div aria-hidden className="absolute -right-16 -top-20 h-52 w-52 rotate-12 bg-[#9ed7ff]/25" />
-              <p className="micro-label !text-white/55">The studio model</p>
+              <p className="micro-label !text-white/55">The agency model</p>
               <p className="relative mt-6 max-w-lg text-2xl font-medium leading-[1.12] tracking-[-.035em]">
                 Fewer layers between the business problem and the person solving it.
               </p>
@@ -113,7 +117,7 @@ export default function AboutPage() {
                 diluted communication.
               </p>
               <p>
-                By taking on fewer projects at a time, the studio can give each one the care it needs: from positioning
+                By taking on fewer projects at a time, the agency can give each one the care it needs: from positioning
                 and structure to the details that hold up once a site is live.
               </p>
             </div>

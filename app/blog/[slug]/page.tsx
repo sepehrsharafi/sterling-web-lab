@@ -47,8 +47,21 @@ export async function generateStaticParams() { return getBlogSlugs(); }
 export default async function BlogDetailsPage({ params }: Props) {
   const blog = await getBlog((await params).slug);
   if (!blog) notFound();
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: blog.title,
+    description: blog.excerpt,
+    datePublished: blog.date || undefined,
+    dateModified: blog.date || undefined,
+    mainEntityOfPage: `${site.url}/blog/${blog.slug}`,
+    author: { "@type": "Organization", name: site.name },
+    publisher: { "@type": "Organization", name: site.name },
+    image: blog.image || undefined,
+  };
 
   return <main className="min-h-screen bg-[#f4f7f8] text-[#25292a]">
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
     <header className="relative overflow-hidden pb-16 pt-36 lg:pb-20 lg:pt-40">
       <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_10%_30%,rgba(255,195,109,.42),transparent_28%),radial-gradient(circle_at_72%_5%,rgba(180,166,255,.32),transparent_30%),radial-gradient(circle_at_94%_70%,rgba(158,215,255,.5),transparent_34%)]"/>
       <div className="relative mx-auto max-w-[1160px] px-6 lg:px-10">

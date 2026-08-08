@@ -114,7 +114,7 @@ export default async function BlogPage() {
             <div className="mt-16">
               <div className="mb-8 flex items-end justify-between">
                 <div>
-                  <p className="micro-label">More from the studio</p>
+                  <p className="micro-label">More from the agency</p>
                   <h2 className="mt-3 text-3xl font-medium tracking-[-.04em]">Latest articles</h2>
                 </div>
                 <span className="hidden text-xs text-[#6d7678] sm:block">

@@ -19,11 +19,11 @@ export const metadata: Metadata = {
     template: `%s | Sterling Web Lab`,
   },
   description:
-    "Sterling Web Lab is a digital agency that specializes in web design, development, and branding.",
+    "Sterling Web Lab designs and builds clear, high-performing websites for service businesses that want to earn trust and generate enquiries.",
   openGraph: {
     title: "Sterling Web Lab | Digital Agency",
     description:
-      "Sterling Web Lab is a digital agency that specializes in web design, development, and branding.",
+      "Sterling Web Lab designs and builds clear, high-performing websites for service businesses that want to earn trust and generate enquiries.",
     url: site.url,
     siteName: "Sterling Web Lab",
     images: [
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Sterling Web Lab | Digital Agency",
     description:
-      "Sterling Web Lab is a digital agency that specializes in web design, development, and branding.",
+      "Sterling Web Lab designs and builds clear, high-performing websites for service businesses that want to earn trust and generate enquiries.",
     images: ["/og-image.png"],
   },
 };

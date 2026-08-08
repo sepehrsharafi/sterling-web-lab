@@ -5,6 +5,14 @@ import { ScrollHandler } from "@/components/ScrollHandler";
 import ScrollFillStatement from "@/components/ScrollFillStatement";
 import InteractiveServices from "@/components/InteractiveServices";
 import InteractiveProcess from "@/components/InteractiveProcess";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Web Design & Development for Service Businesses",
+  description:
+    "Sterling Web Lab designs and builds clear, high-performing websites that help service businesses earn trust, attract better-fit clients, and generate enquiries.",
+  alternates: { canonical: "/" },
+};
 
 const painPoints = [
   { number: "01", color: "#ffc36d", problem: "People arrive interested—and leave unsure what you actually do.", cost: "When the message takes effort to decode, good prospects assume the offer is not for them and move on.", fix: "We clarify the positioning, message, and page hierarchy so the right visitor understands the value quickly." },
@@ -14,9 +22,36 @@ const painPoints = [
 ];
 
 const carePlans = [
-  { name: "Maintain", price: "$50", color: "#d9f0cf", copy: "Keep a finished site healthy and current.", includes: ["Routine technical checks", "One small content update", "Email support"] },
-  { name: "Improve", price: "$100", color: "#9ed7ff", copy: "A steady rhythm of practical refinements.", includes: ["Everything in Maintain", "Two small updates", "Performance and SEO review"] },
-  { name: "Optimize", price: "$350", color: "#ffc36d", copy: "Focused monthly attention on growth.", includes: ["Everything in Improve", "One improvement sprint", "Analytics and conversion review"] },
+  {
+    name: "Maintain",
+    price: "$50",
+    color: "#d9f0cf",
+    badge: "Essential coverage",
+    outcome: "Keep your website dependable.",
+    copy: "For a stable website that needs regular checks and occasional changes—without finding help from scratch each time.",
+    bestFor: "Best for websites that rarely change",
+    includes: ["Monthly technical health check", "1 focused content or design update", "Form and dependency check", "Email support when questions come up"],
+  },
+  {
+    name: "Improve",
+    price: "$100",
+    color: "#9ed7ff",
+    badge: "Steady progress",
+    outcome: "Keep pace with the business.",
+    copy: "For teams that need the website to stay current, polished, and gradually improve as their offer and priorities evolve.",
+    bestFor: "Best for active service-business websites",
+    includes: ["Everything in Maintain", "2 focused updates each month", "Performance and essential SEO review", "A clear next-improvement recommendation"],
+  },
+  {
+    name: "Optimize",
+    price: "$350",
+    color: "#ffc36d",
+    badge: "Focused growth",
+    outcome: "Turn attention into better action.",
+    copy: "For websites tied closely to sales, where informed monthly improvements can reduce friction and strengthen the path to enquiry.",
+    bestFor: "Best for websites that actively support sales",
+    includes: ["Everything in Improve", "1 focused improvement sprint", "Analytics and conversion-path review", "Prioritized monthly improvement roadmap"],
+  },
 ];
 
 export default function Home() {
@@ -96,8 +131,8 @@ export default function Home() {
 
     <section id="about" className="scroll-mt-20 bg-[#ffc269]">
       <div className="mx-auto grid max-w-[1440px] md:grid-cols-[.85fr_1.15fr]">
-        <div className="relative min-h-[420px] overflow-hidden bg-[#ffb84e]"><div className="absolute inset-[12%] bg-[#343b3c] [clip-path:polygon(0_10%,80%_0,100%_82%,18%_100%)]"/><div className="absolute inset-[18%] overflow-hidden [clip-path:polygon(0_10%,80%_0,100%_82%,18%_100%)]"><Image src="/agancy-footer-3.png" alt="Sterling Web Lab studio" fill className="object-cover"/></div></div>
-        <div className="flex flex-col justify-center px-8 py-16 md:px-16 lg:px-24"><p className="micro-label">About Sterling Web Lab</p><h2 className="mt-5 max-w-2xl text-4xl font-medium leading-[1.02] tracking-[-.04em] lg:text-5xl">Small enough to stay close. Experienced enough to see the whole picture.</h2><p className="mt-6 max-w-xl leading-7 text-[#4c4c47]">Work directly with a senior partner from the first conversation through launch—fewer handoffs, focused attention, and clear communication throughout.</p><Link href="/about" className="cta-link mt-8 inline-flex items-center gap-2 text-sm font-semibold">More about the studio <ArrowRight size={15}/></Link></div>
+        <div className="relative min-h-[420px] overflow-hidden bg-[#ffb84e]"><div className="absolute inset-[12%] bg-[#343b3c] [clip-path:polygon(0_10%,80%_0,100%_82%,18%_100%)]"/><div className="absolute inset-[18%] overflow-hidden [clip-path:polygon(0_10%,80%_0,100%_82%,18%_100%)]"><Image src="/agancy-footer-3.png" alt="Sterling Web Lab agency" fill className="object-cover"/></div></div>
+        <div className="flex flex-col justify-center px-8 py-16 md:px-16 lg:px-24"><p className="micro-label">About Sterling Web Lab</p><h2 className="mt-5 max-w-2xl text-4xl font-medium leading-[1.02] tracking-[-.04em] lg:text-5xl">Small enough to stay close. Experienced enough to see the whole picture.</h2><p className="mt-6 max-w-xl leading-7 text-[#4c4c47]">Work directly with a senior partner from the first conversation through launch—fewer handoffs, focused attention, and clear communication throughout.</p><Link href="/about" className="cta-link mt-8 inline-flex items-center gap-2 text-sm font-semibold">More about the agency <ArrowRight size={15}/></Link></div>
       </div>
     </section>
 
@@ -112,9 +147,35 @@ export default function Home() {
 
     <section id="pricing" className="scroll-mt-24 bg-[#eef2f3] py-20 lg:py-28">
       <div className="mx-auto max-w-[1260px] px-6 lg:px-10">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end"><div><p className="micro-label">Monthly website care</p><h2 className="mt-5 max-w-2xl text-4xl font-medium leading-[1.02] tracking-[-.04em] lg:text-5xl">Keep improving after launch.</h2></div><p className="max-w-sm text-sm leading-6 text-[#626c6e]">These plans cover ongoing care for websites we build. Custom strategy, design, and development are scoped separately.</p></div>
-        <div className="mt-12 grid gap-4 md:grid-cols-3">{carePlans.map((plan,index)=><article key={plan.name} className="group relative flex min-h-[390px] flex-col overflow-hidden rounded-[1.35rem] bg-white p-7 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(42,51,53,.1)]"><span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" style={{backgroundColor:plan.color}}/><div className="flex items-center justify-between"><span className="micro-label">{plan.name}</span><span className="font-mono text-xs text-[#7b8587]">0{index+1}</span></div><div className="mt-8 flex items-end gap-2"><strong className="text-5xl font-medium tracking-[-.04em]">{plan.price}</strong><span className="pb-1 text-sm text-[#6a7476]">/ month</span></div><p className="mt-4 text-sm leading-6 text-[#5f696b]">{plan.copy}</p><ul className="mt-auto space-y-3 pt-8">{plan.includes.map(item=><li key={item} className="flex items-center gap-3 text-sm"><span className="h-2 w-2 rounded-full" style={{backgroundColor:plan.color}}/>{item}</li>)}</ul><a href="#audit" className="cta-secondary mt-8 inline-flex items-center justify-between rounded-xl border border-[#9da7a9] px-4 py-3 text-sm font-semibold">Ask about this plan <ArrowRight size={15}/></a></article>)}</div>
-        <p className="mt-7 text-center text-xs leading-5 text-[#6d7779]">Care plans begin after launch and are available for suitable existing websites following a technical review.</p>
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end"><div><p className="micro-label">Monthly website care</p><h2 className="mt-5 max-w-2xl text-4xl font-medium leading-[1.02] tracking-[-.04em] lg:text-5xl">Choose how actively your website should improve.</h2></div><p className="max-w-sm text-sm leading-6 text-[#626c6e]">Get dependable access to the people who understand your website—so useful updates do not sit in a backlog or require a new agency search.</p></div>
+        <div className="mt-12 grid gap-4 md:grid-cols-3">
+          {carePlans.map(plan=><article
+            key={plan.name}
+            tabIndex={0}
+            className="group/card relative flex min-h-[410px] cursor-default flex-col overflow-hidden rounded-[1.35rem] border border-transparent bg-white p-7 outline-none transition-all duration-500 hover:-translate-y-2 hover:border-[#d1d9da] hover:shadow-[0_28px_60px_rgba(42,51,53,.14)] focus:-translate-y-2 focus:border-[#b8c3c5] focus:shadow-[0_28px_60px_rgba(42,51,53,.14)] active:scale-[.985]"
+          >
+            <span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 transition-transform duration-500 group-hover/card:scale-x-100 group-focus/card:scale-x-100" style={{backgroundColor:plan.color}}/>
+            <span aria-hidden className="absolute -right-16 -top-16 h-44 w-44 scale-75 rounded-full opacity-0 transition-all duration-700 group-hover/card:scale-110 group-hover/card:opacity-25 group-focus/card:scale-110 group-focus/card:opacity-25" style={{backgroundColor:plan.color}}/>
+            <div className="relative flex items-center justify-between gap-4">
+              <span className="micro-label">{plan.name}</span>
+              <span className="rounded-full bg-[#f0f3f3] px-3 py-1.5 text-[.6rem] font-bold uppercase tracking-[.11em] text-[#697376] transition-all duration-500 group-hover/card:bg-[#293132] group-hover/card:text-white group-focus/card:bg-[#293132] group-focus/card:text-white">{plan.badge}</span>
+            </div>
+            <div className="relative mt-8 flex items-end gap-2 transition-transform duration-500 group-hover/card:translate-x-1 group-focus/card:translate-x-1">
+              <strong className="text-5xl font-medium tracking-[-.04em] transition-transform duration-500 group-hover/card:scale-[1.04] group-focus/card:scale-[1.04]">{plan.price}</strong>
+              <span className="pb-1 text-sm text-[#6a7476]">/ month</span>
+            </div>
+            <h3 className="relative mt-7 text-2xl font-semibold leading-[1.08] tracking-[-.035em]">{plan.outcome}</h3>
+            <p className="relative mt-3 text-sm leading-6 text-[#5f696b]">{plan.copy}</p>
+            <p className="relative mt-5 border-l-2 pl-3 text-xs font-semibold leading-5 text-[#505a5c]" style={{borderColor:plan.color}}>{plan.bestFor}</p>
+            <ul className="relative mt-auto space-y-2 pt-8">
+              {plan.includes.map(item=><li key={item} className="flex items-center gap-3 rounded-lg px-2 py-1.5 text-sm transition-all duration-300 group-hover/card:translate-x-1 group-hover/card:bg-[#f5f7f7] group-focus/card:translate-x-1 group-focus/card:bg-[#f5f7f7]"><span className="h-2 w-2 rounded-full transition-all duration-500 group-hover/card:scale-150 group-focus/card:scale-150" style={{backgroundColor:plan.color}}/>{item}</li>)}
+            </ul>
+            <a href="#audit" className="group/cta relative mt-8 inline-flex items-center justify-between rounded-xl border border-[#9da7a9] px-4 py-3 text-sm font-semibold transition-all duration-500 hover:!bg-[#293132] hover:!text-white group-hover/card:border-[#293132] group-hover/card:bg-[#edf1f2] group-focus/card:border-[#293132] group-focus/card:bg-[#edf1f2]">Start with {plan.name} <ArrowRight size={15} className="transition-transform duration-500 group-hover/card:translate-x-1 group-hover/cta:translate-x-2 group-focus/card:translate-x-1"/></a>
+          </article>)}
+        </div>
+        <div className="mx-auto mt-7 max-w-3xl rounded-xl border border-[#d4dbdc] bg-white/55 px-5 py-4 text-center text-xs leading-5 text-[#657072]">
+          A focused update is one contained content or design change. Care plans begin after launch and are available for suitable existing websites following a technical review, so we can confirm the site is safe and practical to support.
+        </div>
       </div>
     </section>
 

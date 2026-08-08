@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { services } from "@/lib/services";
 
-const nav = [["Work", "/#work"], ["Services", "/services"], ["Process", "/#process"], ["Pricing", "/#pricing"], ["About", "/about"], ["Insights", "/blog"], ["Contact", "/contact"]];
+const nav = [["Work", "/#work"], ["Services", "/services"], ["Process", "/#process"], ["Pricing", "/#pricing"], ["About", "/about"], ["Agency", "/agency"], ["Insights", "/blog"], ["Contact", "/contact"]];
 const legalCopy = {
   "Privacy Policy": "We respect your privacy and use information only to respond to enquiries and provide our services.",
   "Terms of Service": "Project terms, scope, timing, responsibilities, and approvals are agreed clearly before work begins.",
