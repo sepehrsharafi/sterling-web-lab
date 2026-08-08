@@ -1,118 +1,43 @@
-import { client } from "@/lib/sanity";
-import { Blog } from "@/types";
-import { ArrowLeft, ArrowUpRight, Calendar, Clock } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
 import type { Metadata } from "next";
-import SeoBreadcrumbs from "@/components/SeoBreadcrumbs";
-import { site } from "@/lib/site";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft, ArrowUpRight, Calendar, Clock } from "lucide-react";
+import { getBlogs } from "@/lib/blogs";
 
-export const metadata: Metadata = {
-  title: "Blogs",
-  description: "Read our latest blog posts on design, technology, and more.",
-  alternates: {
-    canonical: "/blog",
-  },
-};
+export const metadata: Metadata = { title: "Insights", description: "Thoughtful notes on websites, clarity, and growth.", alternates: { canonical: "/blog" } };
+const colors = ["#ffc36d", "#9ed7ff", "#b4a6ff", "#d9f0cf"];
+const readableDate = (date?: string) => date ? new Intl.DateTimeFormat("en", { day: "numeric", month: "short", year: "numeric" }).format(new Date(`${date}T00:00:00`)) : "";
 
-async function getBlogs() {
-  const query = `*[_type == "blog"]{
-    "id": _id,
-    title,
-    excerpt,
-    category,
-    date,
-    readTime,
-    "image": image.asset->url,
-    "slug": slug.current,
-    seo
-  }`;
-  const data = await client.fetch(query, {}, { next: { tags: ["blog"] } });
-  return data;
-}
+export default async function BlogPage() {
+  const blogs = await getBlogs();
+  const [featured, ...posts] = blogs;
 
-const BlogPage = async () => {
-  const blogs: Blog[] = await getBlogs();
-  return (
-    <div className="pt-32 pb-20 min-h-screen bg-brand-black">
-      <SeoBreadcrumbs
-        items={[
-          { name: "Home", url: site.url },
-          { name: "Blog", url: `${site.url}/blog` },
-        ]}
-      />
-      <div className="container mx-auto px-4 md:px-6">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-sm text-gray-400 hover:text-white mb-8 group"
-        >
-          <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-          Back to Home
-        </Link>
-
-        <div className="mb-20 text-center max-w-2xl mx-auto">
-          <span className="text-brand-accent font-bold tracking-widest text-sm uppercase mb-4 block">
-            Insights & News
-          </span>
-          <h1 className="text-5xl md:text-7xl font-display font-bold mb-6">
-            Our Blog
-          </h1>
-          <p className="text-xl text-gray-300">
-            Thoughts on design, technology, and the future of digital
-            experiences.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
-          {blogs.map((post) => (
-            <Link href={`/blog/${post.slug}`} key={post.id}>
-              <article className="group cursor-pointer">
-                <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-6">
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
-                  {post.image ? (
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                      fill
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                      <span className="text-gray-500">No Image</span>
-                    </div>
-                  )}
-                  <div className="absolute top-4 left-4 z-20">
-                    <span className="px-3 py-1 bg-white/90 text-black text-xs font-bold rounded-full uppercase tracking-wider">
-                      {post.category}
-                    </span>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-4 text-xs text-gray-500">
-                    <div className="flex items-center gap-1">
-                      <Calendar size={12} />
-                      <span>{post.date}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Clock size={12} />
-                      <span>{post.readTime}</span>
-                    </div>
-                  </div>
-                  <h2 className="text-2xl font-display font-bold group-hover:text-brand-accent transition-colors">
-                    {post.title}
-                  </h2>
-                  <p className="text-gray-400 line-clamp-2">{post.excerpt}</p>
-                  <div className="flex items-center gap-1 text-brand-accent font-medium text-sm mt-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                    Read Article <ArrowUpRight size={14} />
-                  </div>
-                </div>
-              </article>
-            </Link>
-          ))}
+  return <main className="min-h-screen bg-[#f4f7f8] text-[#25292a]">
+    <section className="relative overflow-hidden pb-20 pt-36 lg:pb-24 lg:pt-40">
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_12%_35%,rgba(255,195,109,.48),transparent_28%),radial-gradient(circle_at_56%_5%,rgba(180,166,255,.35),transparent_30%),radial-gradient(circle_at_92%_45%,rgba(158,215,255,.5),transparent_34%)]" />
+      <div className="relative mx-auto max-w-[1440px] px-6 lg:px-10">
+        <Link href="/" className="group inline-flex items-center gap-2 text-sm text-[#59666b] transition hover:text-[#25292a]"><ArrowLeft size={15} className="transition-transform group-hover:-translate-x-1"/>Back to home</Link>
+        <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_.85fr] lg:items-end lg:gap-20">
+          <div><p className="micro-label">Insights</p><h1 className="mt-6 max-w-3xl text-[clamp(3rem,4.5vw,4.85rem)] font-medium leading-[1] tracking-[-.042em]">Useful thinking.<br/><span className="text-[#667376]">Clearly explained.</span></h1></div>
+          <div className="max-w-xl lg:justify-self-end"><p className="text-lg leading-8 text-[#566164]">Practical notes on clearer positioning, stronger websites, useful technology, and the decisions that help digital work perform.</p><div className="mt-7 flex items-center gap-3 text-xs text-[#657073]"><span className="h-2 w-2 rounded-full bg-[#83a176]"/>Written for people building real businesses.</div></div>
         </div>
       </div>
-    </div>
-  );
-};
+    </section>
 
-export default BlogPage;
+    <section className="bg-white py-16 lg:py-24">
+      <div className="mx-auto max-w-[1440px] px-6 lg:px-10">
+        {featured && <Link href={`/blog/${featured.slug}`} className="group grid overflow-hidden rounded-[1.6rem] bg-[#eef2f3] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(42,51,53,.12)] lg:grid-cols-[1.15fr_.85fr]">
+          <div className="relative min-h-[330px] overflow-hidden lg:min-h-[500px]">{featured.image ? <Image src={featured.image} alt={featured.title} fill priority sizes="(min-width:1024px) 60vw, 100vw" className="object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-[1.035]"/> : <div className="h-full bg-[#dbe3e5]"/>}<span className="absolute left-5 top-5 rounded-full bg-white/90 px-3 py-1.5 text-[.65rem] font-bold uppercase tracking-[.12em] backdrop-blur">Featured insight</span></div>
+          <article className="flex flex-col justify-between p-7 sm:p-10 lg:p-12">
+            <div><p className="micro-label">{featured.category || "Insight"}</p><h2 className="mt-6 max-w-xl text-[clamp(2rem,3vw,3.25rem)] font-medium leading-[1.02] tracking-[-.045em]">{featured.title}</h2><p className="mt-5 max-w-lg text-base leading-7 text-[#5d6769]">{featured.excerpt}</p></div>
+            <div className="mt-10 flex flex-wrap items-center gap-4 text-xs text-[#687275]"><span className="flex items-center gap-2"><Calendar size={14}/>{readableDate(featured.date)}</span>{featured.readTime&&<span className="flex items-center gap-2"><Clock size={14}/>{featured.readTime}</span>}<span className="ml-auto grid h-11 w-11 place-items-center rounded-full bg-[#2d3536] text-white transition-transform duration-500 group-hover:rotate-45"><ArrowUpRight size={17}/></span></div>
+          </article>
+        </Link>}
+
+        {posts.length > 0 && <div className="mt-16"><div className="mb-8 flex items-end justify-between"><div><p className="micro-label">More from the studio</p><h2 className="mt-3 text-3xl font-medium tracking-[-.04em]">Latest articles</h2></div><span className="hidden text-xs text-[#6d7678] sm:block">{blogs.length.toString().padStart(2, "0")} published notes</span></div><div className="grid gap-5 md:grid-cols-2">{posts.map((post, index) => <Link href={`/blog/${post.slug}`} key={post.id} className="group overflow-hidden rounded-[1.35rem] bg-[#f0f3f4] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_42px_rgba(42,51,53,.1)]">
+          <article><div className="relative aspect-[1.65] overflow-hidden">{post.image ? <Image src={post.image} alt={post.title} fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"/> : <div className="h-full" style={{backgroundColor:colors[index%colors.length]}}/>}<span className="absolute bottom-0 left-0 h-1 w-0 transition-[width] duration-700 group-hover:w-full" style={{backgroundColor:colors[index%colors.length]}}/></div><div className="p-6 sm:p-7"><div className="flex items-center gap-3 text-[.68rem] uppercase tracking-[.12em] text-[#697376]"><span>{post.category || "Insight"}</span><span className="h-1 w-1 rounded-full bg-[#9aa3a5]"/><span>{readableDate(post.date)}</span></div><h3 className="mt-4 max-w-xl text-2xl font-medium leading-[1.08] tracking-[-.035em]">{post.title}</h3><p className="mt-3 line-clamp-2 text-sm leading-6 text-[#606a6c]">{post.excerpt}</p><div className="mt-6 flex items-center justify-between text-sm font-semibold"><span>Read article</span><ArrowUpRight size={16} className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"/></div></div></article>
+        </Link>)}</div></div>}
+      </div>
+    </section>
+  </main>;
+}

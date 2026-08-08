@@ -23,8 +23,8 @@
 }
 
 body {
-  background-color: #0a0a0a;
-  color: #F4F4F5;
+  background-color: #fbfaf6;
+  color: #263843;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -74,3 +74,44 @@ img {
     animation-delay: 5s;
   }
 }
+
+.display { font-family: Georgia, "Times New Roman", serif; }
+.eyebrow, .micro-label { font-size: .75rem; font-weight: 700; line-height: 1.4; letter-spacing: .14em; text-transform: uppercase; }
+.eyebrow { color: #b47a66; }
+.micro-label { color: #596164; }
+.button-dark, .button-cream { display: inline-flex; align-items: center; gap: .65rem; padding: .9rem 1.25rem; font-size: .875rem; font-weight: 700; transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease, background-color .3s ease, gap .4s ease; }
+.button-dark { background: #183247; color: #fff; }
+.button-dark:hover { gap: .95rem; transform: translateY(-3px); background: #294a5e; box-shadow: 0 14px 30px rgba(24,50,71,.2); }
+.button-light { border: 1px solid #aeb7b6; color: #183247; display: inline-flex; align-items: center; padding: .9rem 1.25rem; font-size: .875rem; font-weight: 700; transition: .2s ease; }
+.button-light:hover { background: #edf0e9; }
+.button-cream { background: #fbfaf6; color: #183247; }
+.button-cream:hover { background: #e6e4da; }
+.button-black, .button-white { display:inline-flex; align-items:center; gap:.65rem; border-radius:999px; padding:.95rem 1.45rem; font-size:.875rem; font-weight:700; transition:.2s ease; }
+.button-black { background:#151515; color:white; }.button-black:hover { background:#444; }
+.button-white { border:1px solid #e1e1e1; background:white; color:#151515; }.button-white:hover { border-color:#aaa; }
+.home-ui .display { font-family: var(--font-inter), Arial, sans-serif; }
+.home-ui .eyebrow { color:#747474; letter-spacing:.09em; }
+.home-ui .button-dark { background:#151515; border-radius:999px; }.home-ui .button-light { border-color:#dedede; border-radius:999px; color:#151515; }
+.tsh-home { font-family: var(--font-inter), Arial, sans-serif; }
+.tsh-home .micro-label { color:#596164; }
+.tsh-home .section-title { font-size:clamp(2.5rem,3.8vw,4.2rem); font-weight:500; line-height:.98; letter-spacing:-.042em; }
+.tsh-home .button-dark { border-radius:0; background:#343a3b; }
+.cta-primary, .cta-secondary, .cta-link { transition: transform .42s cubic-bezier(.2,.8,.2,1), box-shadow .42s ease, background-color .3s ease, color .3s ease, border-color .3s ease, gap .42s cubic-bezier(.2,.8,.2,1); }
+.cta-primary:hover, .cta-secondary:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(39,48,49,.14); }
+.cta-primary:hover { gap: 1rem; }
+.cta-secondary:hover { border-color:#778285; background:#fff; }
+.cta-link:hover { gap:1.15rem; color:#182f3b; }
+.cta-primary svg, .cta-secondary svg, .cta-link svg, .button-dark svg { transition:transform .42s cubic-bezier(.2,.8,.2,1); }
+.cta-primary:hover svg, .cta-link:hover svg, .button-dark:hover svg { transform:translateX(3px); }
+.cta-primary:active, .cta-secondary:active, .button-dark:active { transform:translateY(-1px) scale(.985); box-shadow:none; }
+.cta-primary:focus-visible, .cta-secondary:focus-visible, .cta-link:focus-visible, .button-dark:focus-visible { outline:2px solid #4b6d7e; outline-offset:4px; }
+.field { display: block; width: 100%; margin-top: .45rem; border: 1px solid #d7d2c7; background: #fbfaf6; color: #263843; padding: .8rem .9rem; font-size: .875rem; outline: none; }
+.field:focus { border-color: #718269; box-shadow: 0 0 0 2px rgba(113,130,105,.15); }
+form label { color: #536066; font-size: .75rem; font-weight: 700; }
+.footer-label { margin-bottom: 1rem; color: #f3f0e8; font-size: .7rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+.footer-link { display: block; margin: .7rem 0; font-size: .875rem; color: #b7c1c4; transition: color .2s ease; }
+.footer-link:hover { color: #fff; }
+.article-rich p { font-size: 1.125rem; line-height: 1.9; color: #556167; }
+.article-rich h1, .article-rich h2, .article-rich h3 { font-family: Georgia, "Times New Roman", serif; color: #183247; line-height: 1.1; margin-top: 1.5rem; }
+.article-rich h2 { font-size: 2rem; }.article-rich h3 { font-size: 1.5rem; }
+.article-rich ul, .article-rich ol { padding-left: 1.5rem; color: #556167; line-height: 1.9; }.article-rich a { color: #183247; text-decoration: underline; }

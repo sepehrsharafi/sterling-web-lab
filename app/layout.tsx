@@ -100,7 +100,7 @@ export default function RootLayout({
         />
       </head>
       <Analytics />
-      <body className="font-sans bg-brand-black min-h-screen text-white selection:bg-brand-accent selection:text-white">
+      <body className="font-sans min-h-screen selection:bg-[#718269] selection:text-white">
         <Navbar />
         <main className="fade-in">{children}</main>
         <Footer />

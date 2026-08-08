@@ -1,135 +1,122 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
-import { NavItem } from '../types';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useSmoothScroll } from '@/lib/useSmoothScroll';
 
-const navItems: NavItem[] = [
-  { label: 'Work', href: '/#work' },
-  { label: 'About', href: '/about' },
-  { label: 'Services', href: '/services' },
-  { label: 'Agency', href: '/agency' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contact Us', href: '/contact', isButton: true },
+import Link from "next/link";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
+const nav = [
+  ["Work", "/#work"],
+  ["Services", "/#services"],
+  ["Process", "/#process"],
+  ["Pricing", "/#pricing"],
+  ["About", "/about"],
+  ["Insights", "/blog"],
+  ["Contact", "/contact"],
 ];
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  
-  // Initialize smooth scrolling
-  useSmoothScroll();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const update = () => setScrolled(window.scrollY > 24);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [isOpen]);
-
-  const handleNavClick = (href?: string) => {
-    setIsOpen(false);
-    
-    // Handle work section scrolling
-    if (href === '/#work') {
-      setTimeout(() => {
-        const workSection = document.getElementById('work');
-        if (workSection) {
-          const offsetTop = workSection.offsetTop - 70;
-          window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-          });
-        }
-      }, 100);
-    }
-  };
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
-    <>
-      <nav 
-        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${
-          scrolled || isOpen ? 'bg-brand-black/80 backdrop-blur-md border-b border-gray-800 py-4' : 'bg-transparent py-6 border-gray-800'
-        }`}
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
+      <div
+        className={`pointer-events-auto mx-auto flex h-16 items-center justify-between rounded-2xl border px-4 transition-all duration-500 sm:px-5 ${scrolled || open ? "max-w-[1320px] border-black/10 bg-white/85 shadow-[0_12px_40px_rgba(31,38,40,.12)] backdrop-blur-xl" : "max-w-[1440px] border-white/55 bg-white/70 shadow-[0_6px_24px_rgba(31,38,40,.06)] backdrop-blur-md"}`}
       >
-        <div className="container mx-auto px-4 md:px-6 flex justify-between items-center relative z-[110]">
-          {/* Logo */}
-          <Link href="/" className="text-4xl font-display font-bold hover:text-brand-accent transition-colors relative">
-            sterling<span className="text-brand-accent">.</span>
-          </Link>
+        <Link
+          href="/"
+          className="font-display text-[30px] font-bold leading-none tracking-[-.055em] text-[#193247] transition-opacity hover:opacity-65"
+        >
+          sterling<span className="text-[#81957b]">.</span>
+        </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8 py-3">
-            {navItems.map((item) => (
+        <nav
+          aria-label="Primary navigation"
+          className="hidden items-center lg:gap-1.5 rounded-full border border-black/[.045] bg-[#eef2f3]/80 p-1 lg:flex"
+        >
+          {nav.map(([label, href]) => {
+            const active = href.startsWith("/#") ? false : pathname.startsWith(href);
+            return (
               <Link
-                key={item.label}
-                href={item.href}
-                onClick={() => handleNavClick(item.href)}
-                className={item.isButton 
-                  ? "group flex items-center gap-2 px-4 py-2 bg-white text-black rounded-full text-lg font-medium hover:bg-brand-accent hover:text-white transition-all duration-300"
-                  : `text-xl font-medium transition-colors hover:text-brand-accent ${
-                      pathname === item.href ? 'text-brand-accent' : 'text-gray-300'
-                  }`
-                }
+                key={label}
+                href={href}
+                className={`rounded-full px-3.5 py-2 text-[12px] font-medium transition-all duration-200 ${active ? "bg-white text-[#1f2526] shadow-sm" : "text-[#5a6365] hover:bg-white/75 hover:text-[#1f2526]"}`}
               >
-                {item.label}
-                {item.isButton && <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />}
+                {label}
               </Link>
-            ))}
-          </div>
+            );
+          })}
+        </nav>
 
-          {/* Mobile Toggle */}
-          <button 
-            onClick={() => setIsOpen(!isOpen)} 
-            className="md:hidden text-white p-2 relative focus:outline-none"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </nav>
+        <a
+          href="/#audit"
+          className="group hidden items-center gap-2 rounded-full bg-[#253031] px-4 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg lg:inline-flex"
+        >
+          Free audit{" "}
+          <ArrowUpRight
+            size={14}
+            className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          />
+        </a>
 
-      {/* Mobile Menu Overlay */}
-      <div 
-        className={`fixed inset-0 z-[90] md:hidden bg-brand-black/95 backdrop-blur-2xl flex flex-col justify-center items-center gap-8 transition-all duration-500 ease-in-out w-screen h-screen ${
-          isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-full pointer-events-none'
-        }`}
+        <button
+          type="button"
+          aria-label={open ? "Close navigation" : "Open navigation"}
+          aria-expanded={open}
+          onClick={() => setOpen(!open)}
+          className="grid h-10 w-10 place-items-center rounded-full bg-[#253031] text-white lg:hidden"
+        >
+          {open ? <X size={18} /> : <Menu size={18} />}
+        </button>
+      </div>
+
+      <div
+        className={`pointer-events-auto mx-auto mt-2 max-w-[1320px] overflow-hidden rounded-2xl border border-black/10 bg-white/95 shadow-[0_20px_55px_rgba(31,38,40,.16)] backdrop-blur-xl transition-all duration-300 lg:hidden ${open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-3 opacity-0"}`}
       >
-        <div className="flex flex-col items-center gap-8 p-4 w-full">
-          {navItems.map((item, index) => (
+        <nav aria-label="Mobile navigation" className="grid grid-cols-2 gap-px bg-black/[.06] p-px">
+          {nav.map(([label, href]) => (
             <Link
-              key={item.label}
-              href={item.href}
-              onClick={() => handleNavClick(item.href)}
-              className={`text-4xl font-display font-bold tracking-tight transition-all duration-300 hover:scale-105 ${
-                  item.isButton ? 'text-brand-accent' : 'text-white'
-              }`}
-              style={{ 
-                transform: isOpen ? 'translateY(0)' : 'translateY(20px)',
-                opacity: isOpen ? 1 : 0,
-                transitionDelay: `${index * 50 + 100}ms`
-              }}
+              key={label}
+              href={href}
+              onClick={() => setOpen(false)}
+              className="group flex items-center justify-between bg-white px-5 py-5 text-sm font-semibold text-[#283031] transition-colors hover:bg-[#eef2f3]"
             >
-              {item.label}
+              {label}
+              <ArrowUpRight
+                size={14}
+                className="text-[#899194] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
             </Link>
           ))}
-        </div>
+        </nav>
+        <a
+          href="/#audit"
+          onClick={() => setOpen(false)}
+          className="group flex items-center justify-between bg-[#253031] px-5 py-4 text-sm font-semibold text-white"
+        >
+          Get a free website audit{" "}
+          <ArrowUpRight
+            size={16}
+            className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          />
+        </a>
       </div>
-    </>
+    </header>
   );
-};
-
-export default Navbar;
+}

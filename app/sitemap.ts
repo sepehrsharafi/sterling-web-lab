@@ -25,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }`,
     {},
     { next: { tags: ["blog"] } }
-  );
+  ).catch(() => []);
 
   const blogRoutes: MetadataRoute.Sitemap = blogs.map((blog) => ({
     url: `${site.url}/blog/${blog.slug}`,

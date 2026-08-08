@@ -1,150 +1,52 @@
-import { client } from "@/lib/sanity";
-import { Blog } from "@/types";
-import { ArrowLeft, Calendar, Clock } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
-import { RichPortableText } from "@/components/RichPortableText";
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import SeoBreadcrumbs from "@/components/SeoBreadcrumbs";
-import { site } from "@/lib/site";
+import { ArrowLeft, ArrowRight, Calendar, Clock } from "lucide-react";
+import { RichPortableText } from "@/components/RichPortableText";
+import { getBlog, getBlogSlugs } from "@/lib/blogs";
 
-type Props = {
-  params: { slug: string };
-};
+type Props = { params: Promise<{ slug: string }> };
+const readableDate = (date?: string) => date ? new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T00:00:00`)) : "";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const blog: Blog = await getBlog(slug);
-  if (!blog) {
-    return notFound();
-  }
-
-  // Use SEO metadata if available, otherwise fall back to basic fields
-  const metaTitle = blog.seo?.metaTitle || blog.title;
-  const metaDescription = blog.seo?.metaDescription || blog.excerpt;
-
-  const image = blog.image
-    ? [{ url: blog.image, width: 1200, height: 630 }]
-    : [];
-  const twitterImages = blog.image ? [blog.image] : [];
-
-  return {
-    title: metaTitle,
-    description: metaDescription,
-    alternates: {
-      canonical: `/blog/${slug}`,
-    },
-    openGraph: {
-      title: metaTitle,
-      description: metaDescription,
-      url: `/blog/${slug}`,
-      images: image,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: metaTitle,
-      description: metaDescription,
-      images: twitterImages,
-    },
-  };
+  const blog = await getBlog((await params).slug);
+  return blog ? { title: blog.seo?.metaTitle || blog.title, description: blog.seo?.metaDescription || blog.excerpt, alternates: { canonical: `/blog/${blog.slug}` } } : { title: "Article" };
 }
 
-async function getBlog(slug: string) {
-  const query = `*[_type == "blog" && slug.current == "${slug}"]{
-    "id": _id,
-    title,
-    excerpt,
-    category,
-    date,
-    readTime,
-    "image": image.asset->url,
-    "slug": slug.current,
-    mainContent,
-    seo
-  }[0]`;
-  const data = await client.fetch(query, {}, { next: { tags: ["blog"] } });
-  return data;
-}
+export async function generateStaticParams() { return getBlogSlugs(); }
 
-export async function generateStaticParams() {
-  const query = `*[_type == "blog" && defined(slug.current)]{
-    "slug": slug.current
-  }`;
-  const data = await client.fetch<{ slug: string }[]>(query);
-  return data.map((item) => ({
-    slug: item.slug,
-  }));
-}
+export default async function BlogDetailsPage({ params }: Props) {
+  const blog = await getBlog((await params).slug);
+  if (!blog) notFound();
 
-const BlogDetailsPage = async ({ params }: Props) => {
-  const { slug } = await params;
-  const blog: Blog = await getBlog(slug);
-
-  if (!blog) {
-    return notFound();
-  }
-
-  return (
-    <div className="pt-32 pb-20 min-h-screen bg-brand-black">
-      <SeoBreadcrumbs
-        items={[
-          { name: "Home", url: site.url },
-          { name: "Blog", url: `${site.url}/blog` },
-          { name: blog.title, url: `${site.url}/blog/${blog.slug}` },
-        ]}
-      />
-      <div className="container mx-auto px-4 md:px-6">
-        <Link
-          href="/blog"
-          className="flex items-center gap-2 text-sm text-gray-400 hover:text-white mb-8 group"
-        >
-          <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-          All Posts
-        </Link>
-
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <span className="px-3 py-1 bg-brand-accent/10 text-brand-accent text-xs font-bold rounded-full uppercase tracking-wider">
-              {blog.category}
-            </span>
-            <h1 className="text-4xl md:text-6xl font-display font-bold my-4">
-              {blog.title}
-            </h1>
-            <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
-              <div className="flex items-center gap-2">
-                <Calendar size={14} />
-                <span>{blog.date}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock size={14} />
-                <span>{blog.readTime}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative aspect-[16/9] rounded-2xl overflow-hidden my-8">
-            {blog.image ? (
-              <Image
-                src={blog.image}
-                alt={blog.title}
-                className="w-full h-full object-cover"
-                fill
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                <span className="text-gray-500">No Image</span>
-              </div>
-            )}
-          </div>
-
-          <div className="max-w-none mx-auto">
-            <RichPortableText value={blog.mainContent} />
-          </div>
+  return <main className="min-h-screen bg-[#f4f7f8] text-[#25292a]">
+    <header className="relative overflow-hidden pb-16 pt-36 lg:pb-20 lg:pt-40">
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_10%_30%,rgba(255,195,109,.42),transparent_28%),radial-gradient(circle_at_72%_5%,rgba(180,166,255,.32),transparent_30%),radial-gradient(circle_at_94%_70%,rgba(158,215,255,.5),transparent_34%)]"/>
+      <div className="relative mx-auto max-w-[1160px] px-6 lg:px-10">
+        <Link href="/blog" className="group inline-flex items-center gap-2 text-sm text-[#59666b] transition hover:text-[#25292a]"><ArrowLeft size={15} className="transition-transform group-hover:-translate-x-1"/>All insights</Link>
+        <div className="mt-12 max-w-[960px]">
+          <p className="micro-label">{blog.category || "Insight"}</p>
+          <h1 className="mt-6 text-[clamp(2.65rem,4.3vw,4.35rem)] font-medium leading-[1.02] tracking-[-.04em]">{blog.title}</h1>
+          {blog.excerpt && <p className="mt-7 max-w-3xl text-lg leading-8 text-[#566164]">{blog.excerpt}</p>}
+          <div className="mt-8 flex flex-wrap items-center gap-5 text-sm text-[#667174]"><span className="flex items-center gap-2"><Calendar size={15}/>{readableDate(blog.date)}</span>{blog.readTime&&<span className="flex items-center gap-2"><Clock size={15}/>{blog.readTime}</span>}<span className="hidden h-5 w-px bg-[#aeb6b8] sm:block"/><span>By Sterling Web Lab</span></div>
         </div>
       </div>
-    </div>
-  );
-};
+    </header>
 
-export default BlogDetailsPage;
+    {blog.image && <div className="mx-auto max-w-[1280px] px-6 lg:px-10"><div className="relative aspect-[1.75] overflow-hidden rounded-[1.5rem] bg-[#dfe5e6] shadow-[0_22px_55px_rgba(42,51,53,.1)]"><Image src={blog.image} alt={blog.title} fill priority sizes="(min-width:1280px) 1200px, 100vw" className="object-cover"/></div></div>}
+
+    <article className="mx-auto grid max-w-[1120px] gap-12 px-6 py-16 lg:grid-cols-[220px_1fr] lg:px-10 lg:py-24">
+      <aside className="lg:sticky lg:top-28 lg:self-start">
+        <p className="micro-label">A useful read for</p>
+        <p className="mt-4 text-sm leading-6 text-[#616b6d]">Business owners and teams making decisions about their website, positioning, and digital experience.</p>
+        <div className="mt-8 h-1 w-12 rounded-full bg-[#ffc36d]"/>
+      </aside>
+      <RichPortableText value={blog.mainContent} className="max-w-[760px]"/>
+    </article>
+
+    <section className="bg-[#2d3536] py-16 text-white lg:py-20">
+      <div className="mx-auto flex max-w-[1120px] flex-col justify-between gap-8 px-6 md:flex-row md:items-end lg:px-10"><div><p className="micro-label !text-white/50">Turn the idea into action</p><h2 className="mt-5 max-w-2xl text-3xl font-medium leading-[1.02] tracking-[-.045em] sm:text-4xl">A clearer website starts with a clearer diagnosis.</h2></div><Link href="/contact" className="cta-primary group inline-flex w-fit items-center gap-4 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#25292a] hover:bg-[#ffc36d]">Start a conversation <ArrowRight size={15} className="transition-transform group-hover:translate-x-1"/></Link></div>
+    </section>
+  </main>;
+}
