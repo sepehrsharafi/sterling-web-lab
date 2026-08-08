@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { site } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/next";
+import PageTransition from "@/components/PageTransition";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -102,7 +103,7 @@ export default function RootLayout({
       <Analytics />
       <body className="font-sans min-h-screen selection:bg-[#718269] selection:text-white">
         <Navbar />
-        <main className="fade-in">{children}</main>
+        <PageTransition>{children}</PageTransition>
         <Footer />
       </body>
     </html>

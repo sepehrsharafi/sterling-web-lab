@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useState, useTransition, type ChangeEvent, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, useTransition, type ChangeEvent, type FormEvent } from "react";
 import { ArrowLeft, ArrowUpRight, Check, Globe2, Loader, Mail, Send, X } from "lucide-react";
 import Link from "next/link";
 import { sendEmail } from "@/app/actions/sendEmail";
-
-const inputClass =
-  "w-full rounded-xl border border-[#d8dddc] bg-white px-4 py-3.5 text-sm text-[#293234] outline-none transition-all duration-300 placeholder:text-[#9aa2a3] hover:border-[#b7c0bf] focus:border-[#667676] focus:ring-4 focus:ring-[#9ed7ff]/20";
+import { FormField, formInputClass } from "@/components/FormField";
 const services = [
   "Website strategy",
   "Design & development",
@@ -42,10 +40,10 @@ export default function ContactUs() {
     event.preventDefault();
     setResult(null);
     const nextErrors: typeof errors = {};
-    if (!formData.firstName) nextErrors.firstName = "First name is required.";
-    if (!formData.lastName) nextErrors.lastName = "Last name is required.";
-    if (!formData.email) nextErrors.email = "Email is required.";
-    if (!formData.message) nextErrors.message = "Message is required.";
+    if (!formData.firstName.trim()) nextErrors.firstName = "First name is required.";
+    if (!formData.lastName.trim()) nextErrors.lastName = "Last name is required.";
+    if (!/^\S+@\S+\.\S+$/.test(formData.email)) nextErrors.email = "Enter a valid email address.";
+    if (!formData.message.trim()) nextErrors.message = "Message is required.";
     if (Object.keys(nextErrors).length) {
       setErrors(nextErrors);
       return;
@@ -132,7 +130,7 @@ export default function ContactUs() {
             </div>
 
             <form onSubmit={handleSubmit} className="grid gap-5 sm:grid-cols-2" noValidate>
-              <Field label="First name" error={errors.firstName}>
+              <FormField label="First name" error={errors.firstName}>
                 <input
                   aria-invalid={!!errors.firstName}
                   type="text"
@@ -141,10 +139,10 @@ export default function ContactUs() {
                   value={formData.firstName}
                   onChange={handleChange}
                   placeholder="Your first name"
-                  className={`${inputClass} ${errors.firstName ? "!border-[#c56a63] !ring-[#c56a63]/10" : ""}`}
+                  className={`${formInputClass} ${errors.firstName ? "!border-[#c56a63] !ring-[#c56a63]/10" : ""}`}
                 />
-              </Field>
-              <Field label="Last name" error={errors.lastName}>
+              </FormField>
+              <FormField label="Last name" error={errors.lastName}>
                 <input
                   aria-invalid={!!errors.lastName}
                   type="text"
@@ -153,10 +151,10 @@ export default function ContactUs() {
                   value={formData.lastName}
                   onChange={handleChange}
                   placeholder="Your last name"
-                  className={`${inputClass} ${errors.lastName ? "!border-[#c56a63] !ring-[#c56a63]/10" : ""}`}
+                  className={`${formInputClass} ${errors.lastName ? "!border-[#c56a63] !ring-[#c56a63]/10" : ""}`}
                 />
-              </Field>
-              <Field label="Email address" error={errors.email} wide>
+              </FormField>
+              <FormField label="Email address" error={errors.email} wide>
                 <input
                   aria-invalid={!!errors.email}
                   type="email"
@@ -165,22 +163,22 @@ export default function ContactUs() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="you@company.com"
-                  className={`${inputClass} ${errors.email ? "!border-[#c56a63] !ring-[#c56a63]/10" : ""}`}
+                  className={`${formInputClass} ${errors.email ? "!border-[#c56a63] !ring-[#c56a63]/10" : ""}`}
                 />
-              </Field>
-              <Field label="Where do you need help?" wide>
+              </FormField>
+              <FormField label="Where do you need help?" wide>
                 <select
                   name="service"
                   value={formData.service}
                   onChange={handleChange}
-                  className={`${inputClass} appearance-none`}
+                  className={`${formInputClass} appearance-none`}
                 >
                   {services.map((service) => (
                     <option key={service}>{service}</option>
                   ))}
                 </select>
-              </Field>
-              <Field label="What should the website do better?" error={errors.message} wide>
+              </FormField>
+              <FormField label="What should the website do better?" error={errors.message} wide>
                 <textarea
                   aria-invalid={!!errors.message}
                   name="message"
@@ -188,9 +186,9 @@ export default function ContactUs() {
                   onChange={handleChange}
                   rows={5}
                   placeholder="A little context about the business, the current problem, and the outcome you want..."
-                  className={`${inputClass} resize-none ${errors.message ? "!border-[#c56a63] !ring-[#c56a63]/10" : ""}`}
+                  className={`${formInputClass} resize-none ${errors.message ? "!border-[#c56a63] !ring-[#c56a63]/10" : ""}`}
                 />
-              </Field>
+              </FormField>
 
               {result && (
                 <div
@@ -220,25 +218,5 @@ export default function ContactUs() {
         </div>
       </div>
     </main>
-  );
-}
-
-function Field({
-  label,
-  error,
-  wide,
-  children,
-}: {
-  label: string;
-  error?: string;
-  wide?: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <label className={`block text-[.72rem] font-semibold text-[#4e595b] ${wide ? "sm:col-span-2" : ""}`}>
-      <span className="mb-2 block">{label}</span>
-      {children}
-      {error && <span className="mt-1.5 block text-[.68rem] font-medium text-[#a34e49]">{error}</span>}
-    </label>
   );
 }

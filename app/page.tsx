@@ -6,6 +6,7 @@ import ScrollFillStatement from "@/components/ScrollFillStatement";
 import InteractiveServices from "@/components/InteractiveServices";
 import InteractiveProcess from "@/components/InteractiveProcess";
 import type { Metadata } from "next";
+import AuditForm from "@/components/AuditForm";
 
 export const metadata: Metadata = {
   title: "Web Design & Development for Service Businesses",
@@ -182,7 +183,7 @@ export default function Home() {
     <section id="audit" className="scroll-mt-20 bg-white py-20 lg:py-28">
       <div className="mx-auto grid max-w-[1260px] gap-14 px-6 lg:grid-cols-[.9fr_1.1fr] lg:px-10">
         <div><p className="micro-label">Free website audit</p><h2 className="mt-4 text-4xl font-medium leading-[.98] tracking-[-.05em] lg:text-5xl">A practical starting point, with no obligation.</h2><p className="mt-5 max-w-md leading-7 text-[#60686a]">We’ll personally review your website and send a concise roadmap for improving clarity, credibility, conversion, and essential SEO.</p><ul className="mt-7 space-y-3 text-sm">{['First impression / brand review','Conversion clarity','UX / user journey','Performance / SEO basics','Prioritized recommendations'].map(x=><li key={x} className="flex items-center gap-3"><Check size={16}/>{x}</li>)}</ul></div>
-        <form className="border border-[#dce1e2] bg-[#f4f7f8] p-6 sm:p-8"><div className="grid gap-4 sm:grid-cols-2"><label>Name<input required name="name" placeholder="Your full name" className="field"/></label><label>Email<input required type="email" name="email" placeholder="you@example.com" className="field"/></label><label className="sm:col-span-2">Website URL<input name="website" type="url" placeholder="https://yourwebsite.com" className="field"/></label><label className="sm:col-span-2">Business type<input name="business" placeholder="Consultant, coach, agency, eCommerce..." className="field"/></label><label className="sm:col-span-2">Current challenge<textarea name="message" rows={3} placeholder="What should your website do better?" className="field resize-none"/></label><button className="button-dark mt-2 justify-center sm:col-span-2" type="submit">Request my free audit <ArrowRight size={16}/></button><p className="text-center text-xs text-[#697174] sm:col-span-2">Personally reviewed. Clear, actionable recommendations.</p></div></form>
+        <AuditForm />
       </div>
     </section>
 
