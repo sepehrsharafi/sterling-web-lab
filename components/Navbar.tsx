@@ -132,7 +132,7 @@ export default function Navbar() {
       <div
         className={`pointer-events-auto mx-auto overflow-hidden rounded-2xl border transition-[background-color,border-color] duration-300 lg:transition-[max-width,background-color,border-color,box-shadow] lg:duration-500 lg:backdrop-blur-xl ${scrolled || open ? "max-w-[1320px] border-black/10 bg-white/95 shadow-[0_10px_24px_rgba(31,38,40,.1)] lg:bg-white/85 lg:shadow-[0_12px_40px_rgba(31,38,40,.12)]" : "max-w-[1440px] border-white/55 bg-white/90 shadow-[0_6px_18px_rgba(31,38,40,.06)] lg:bg-white/70 lg:shadow-[0_6px_24px_rgba(31,38,40,.06)]"}`}
       >
-        <div className="flex h-16 items-center justify-between px-4 sm:px-5">
+        <div className="flex h-16 items-center justify-between px-4 sm:px-5 backdrop-blur-[2px]">
           <Link
             href="/"
             className="font-display text-[30px] font-bold leading-none tracking-[-.055em] text-[#193247] transition-opacity hover:opacity-65"
