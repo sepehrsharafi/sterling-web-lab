@@ -142,7 +142,7 @@ export default function Navbar() {
           href="/"
           className="font-display text-[30px] font-bold leading-none tracking-[-.055em] text-[#193247] transition-opacity hover:opacity-65"
         >
-          sterling<span className="text-[#81957b]">.</span>
+          Sterling<span className="text-[#81957b]">.</span>
         </Link>
 
         <nav
