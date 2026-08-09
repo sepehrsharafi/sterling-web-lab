@@ -130,14 +130,14 @@ export default function Navbar() {
   return (
     <header ref={headerRef} className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
       <div
-        className={`pointer-events-auto mx-auto overflow-hidden rounded-2xl border backdrop-blur-md transition-[max-width,background-color,border-color,box-shadow] duration-500 lg:backdrop-blur-xl ${scrolled || open ? "max-w-[1320px] border-black/10 bg-white/85 shadow-[0_12px_40px_rgba(31,38,40,.12)]" : "max-w-[1440px] border-white/55 bg-white/70 shadow-[0_6px_24px_rgba(31,38,40,.06)]"}`}
+        className={`pointer-events-auto mx-auto overflow-hidden rounded-2xl border transition-[background-color,border-color] duration-300 lg:transition-[max-width,background-color,border-color,box-shadow] lg:duration-500 lg:backdrop-blur-xl ${scrolled || open ? "max-w-[1320px] border-black/10 bg-white/95 shadow-[0_10px_24px_rgba(31,38,40,.1)] lg:bg-white/85 lg:shadow-[0_12px_40px_rgba(31,38,40,.12)]" : "max-w-[1440px] border-white/55 bg-white/90 shadow-[0_6px_18px_rgba(31,38,40,.06)] lg:bg-white/70 lg:shadow-[0_6px_24px_rgba(31,38,40,.06)]"}`}
       >
         <div className="flex h-16 items-center justify-between px-4 sm:px-5">
           <Link
             href="/"
             className="font-display text-[30px] font-bold leading-none tracking-[-.055em] text-[#193247] transition-opacity hover:opacity-65"
           >
-            sterling<span className="text-[#81957b]">.</span>
+            Sterling<span className="text-[#81957b]">.</span>
           </Link>
 
           <nav
@@ -217,10 +217,10 @@ export default function Navbar() {
 
         <div
           aria-hidden={!open}
-          className={`grid transition-[grid-template-rows,opacity,visibility] ease-[cubic-bezier(.16,1,.3,1)] motion-reduce:transition-none lg:hidden ${open ? "visible grid-rows-[1fr] opacity-100 duration-[620ms]" : "invisible grid-rows-[0fr] opacity-0 duration-[440ms]"}`}
+          className={`grid transition-[grid-template-rows,opacity,visibility] ease-[cubic-bezier(.16,1,.3,1)] motion-reduce:transition-none lg:hidden ${open ? "visible grid-rows-[1fr] opacity-100 duration-[560ms]" : "invisible grid-rows-[0fr] opacity-0 duration-[380ms]"}`}
         >
           <div
-            className={`min-h-0 origin-top overflow-hidden [contain:paint] ${open ? "mobile-nav-bloom-open" : "mobile-nav-bloom-close"}`}
+            className={`min-h-0 origin-top overflow-hidden [contain:layout_paint] ${open ? "mobile-nav-bloom-open" : "mobile-nav-bloom-close"}`}
           >
             <nav
               aria-label="Mobile navigation"
@@ -236,9 +236,9 @@ export default function Navbar() {
                     href={href}
                     aria-current={active ? "page" : undefined}
                     onClick={() => setOpen(false)}
-                    className={`group relative flex items-center justify-between overflow-hidden px-5 py-5 text-sm font-semibold transition-[background-color,color,box-shadow,transform,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none ${open ? "translate-x-0 translate-y-0 rotate-0 scale-100 opacity-100" : `${closedDirection} ${closedRotation} translate-y-5 scale-[.88] opacity-0`} ${active ? "bg-[radial-gradient(circle_at_12%_15%,rgba(255,255,255,1),rgba(234,242,237,.96)_58%,rgba(225,235,231,.98))] text-[#193247] shadow-[inset_3px_0_0_#7f9a86,inset_0_0_28px_rgba(132,163,143,.13)]" : "bg-white/95 text-[#4f5b5d] hover:bg-[#eef3f1] hover:text-[#193247]"}`}
+                    className={`group relative flex items-center justify-between overflow-hidden px-5 py-5 text-sm font-semibold transition-[transform,opacity] duration-[240ms] ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none ${open ? "translate-x-0 translate-y-0 rotate-0 scale-100 opacity-100" : `${closedDirection} ${closedRotation} translate-y-5 scale-[.88] opacity-0`} ${active ? "bg-[radial-gradient(circle_at_12%_15%,rgba(255,255,255,1),rgba(234,242,237,.96)_58%,rgba(225,235,231,.98))] text-[#193247] shadow-[inset_3px_0_0_#7f9a86,inset_0_0_28px_rgba(132,163,143,.13)]" : "bg-white/95 text-[#4f5b5d] hover:bg-[#eef3f1] hover:text-[#193247]"}`}
                     style={{
-                      transitionDelay: open ? `${130 + index * 36}ms` : `${(nav.length - index - 1) * 14}ms`,
+                      transitionDelay: open ? `${90 + index * 26}ms` : `${(nav.length - index - 1) * 14}ms`,
                     }}
                   >
                     <span className="flex items-center gap-2.5">
@@ -261,8 +261,8 @@ export default function Navbar() {
             <a
               href="/#audit"
               onClick={() => setOpen(false)}
-              className={`group flex items-center justify-between bg-[#253031] px-5 py-4 text-sm font-semibold text-white transition-[transform,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none ${open ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-[.92] opacity-0"}`}
-              style={{ transitionDelay: open ? "390ms" : "0ms" }}
+              className={`group flex items-center justify-between bg-[#253031] px-5 py-4 text-sm font-semibold text-white transition-[transform,opacity] duration-[240ms] ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none ${open ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-[.92] opacity-0"}`}
+              style={{ transitionDelay: open ? "280ms" : "0ms" }}
             >
               Get a free website audit{" "}
               <ArrowUpRight
