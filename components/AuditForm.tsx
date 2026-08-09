@@ -77,7 +77,7 @@ export default function AuditForm() {
           <span>{isPending ? "Sending your request..." : "Request my free audit"}</span>
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-white/10 transition-transform duration-300 group-hover:translate-x-1">{isPending ? <Loader size={15} className="animate-spin" /> : <Send size={15} />}</span>
         </button>
-        <p className="text-center text-[.68rem] leading-5 text-[#788184] sm:col-span-2">No obligation. Your details are used only to review and respond to this request.</p>
+        <p className="text-center text-[.68rem] leading-5 text-[#687274] sm:col-span-2">No obligation. Your details are used only to review and respond to this request.</p>
       </div>
     </form>
   );

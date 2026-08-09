@@ -51,7 +51,7 @@ export default function Footer() {
             <p className="mb-4 text-[.66rem] font-bold uppercase tracking-[.18em] text-[#a9b5b3]">Services</p>
             <div className="space-y-1 rounded-[1.1rem] bg-white/[.025] p-2">
               {services.map(service => <Link key={service.slug} href={`/services/${service.slug}`} className={`group grid grid-cols-[2rem_1fr_auto] items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-white/65 hover:bg-white/[.075] hover:pl-4 hover:text-white ${smooth}`}>
-                <span className="flex items-center gap-2 font-mono text-[.62rem] text-white/35"><i className="h-1.5 w-1.5 rounded-full transition-transform duration-500 group-hover:scale-[1.7]" style={{ backgroundColor: service.color }} />{service.number}</span>
+                <span className="flex items-center gap-2 font-mono text-[.62rem] text-white/60"><i className="h-1.5 w-1.5 rounded-full transition-transform duration-500 group-hover:scale-[1.7]" style={{ backgroundColor: service.color }} />{service.number}</span>
                 <span>{service.title}</span>
                 <ArrowUpRight size={14} className={`opacity-45 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100 ${smooth}`} />
               </Link>)}
@@ -64,11 +64,11 @@ export default function Footer() {
               <a href="mailto:sterlingweblab@gmail.com" className={`group flex items-center gap-3 rounded-xl bg-white/[.035] p-2 pr-3 text-sm text-white/65 hover:-translate-y-0.5 hover:bg-white/[.08] hover:text-white ${smooth}`}><span className={`grid h-9 w-9 place-items-center rounded-lg bg-white/[.06] group-hover:bg-[#ffc36d] group-hover:text-[#202829] ${smooth}`}><Mail size={15} /></span>Email us<ArrowUpRight size={13} className={`ml-auto opacity-45 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100 ${smooth}`} /></a>
               <a href="https://instagram.com/sterlingweblab" target="_blank" rel="noreferrer" className={`group flex items-center gap-3 rounded-xl bg-white/[.035] p-2 pr-3 text-sm text-white/65 hover:-translate-y-0.5 hover:bg-white/[.08] hover:text-white ${smooth}`}><span className={`grid h-9 w-9 place-items-center rounded-lg bg-white/[.06] group-hover:bg-[#c1b2ff] group-hover:text-[#202829] ${smooth}`}><Instagram size={15} /></span>Instagram<ArrowUpRight size={13} className={`ml-auto opacity-45 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100 ${smooth}`} /></a>
             </div>
-            <p className="mt-5 text-xs leading-5 text-white/45">Working directly with clients worldwide.</p>
+            <p className="mt-5 text-xs leading-5 text-white/50">Working directly with clients worldwide.</p>
           </div>
         </div>
 
-        <div className="mb-5 flex flex-col justify-between gap-4 rounded-2xl bg-black/10 px-5 py-4 text-[.68rem] text-white/40 sm:flex-row sm:items-center">
+        <div className="mb-5 flex flex-col justify-between gap-4 rounded-2xl bg-black/10 px-5 py-4 text-[.68rem] text-white/55 sm:flex-row sm:items-center">
           <span>{"©"} 2026 Sterling Web Lab. All rights reserved.</span>
           <div className="flex gap-5">{Object.keys(legalCopy).map(label => <button key={label} onClick={() => setLegal(label as keyof typeof legalCopy)} className="transition-colors duration-300 hover:text-white">{label}</button>)}</div>
         </div>

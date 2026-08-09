@@ -33,6 +33,37 @@ export default function Navbar() {
   const desktopLinkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const pathname = usePathname();
 
+  const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (
+      pathname !== "/" ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    setOpen(false);
+
+    // A link to the route we are already on is a no-op in Next.js. Handle the
+    // home-page case explicitly so the logo always behaves like a "back home"
+    // control, even before the user has visited a hashed navigation section.
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${window.location.pathname}${window.location.search}`,
+    );
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  };
+
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 24);
     update();
@@ -135,6 +166,8 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between px-4 sm:px-5 backdrop-blur-[2px]">
           <Link
             href="/"
+            aria-label="Sterling Web Lab home"
+            onClick={handleLogoClick}
             className="font-display text-[30px] font-bold leading-none tracking-[-.055em] text-[#193247] transition-opacity hover:opacity-65"
           >
             Sterling<span className="text-[#81957b]">.</span>
